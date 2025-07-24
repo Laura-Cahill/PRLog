@@ -15,7 +15,7 @@ func main() {
 
     // Renders our homepage
     app.Get("/", func(c *fiber.Ctx) error {
-        return c.Render("./index.html", fiber.Map{
+        return c.Render("./html/index.html", fiber.Map{
             "Name": "Ok",
         })
     })
@@ -39,7 +39,7 @@ func main() {
             panic(err)
         } else {
             // Return a document with our data
-            return c.Render("./index.html", fiber.Map{
+            return c.Render("./html/index.html", fiber.Map{
                 "Name": val,
             })
         }
