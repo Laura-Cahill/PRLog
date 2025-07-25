@@ -1,8 +1,20 @@
 <html>
-    <h1>hello {{.Name}}</h1>
-    <form action="/submit" method="POST">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name">
-        <input type="submit" value="Submit">
+    <h1>{{.warning}}</h1>
+    <h1>Sign Up</h1>
+    <form action="/signup" method="POST">
+        <label for="nusername">username:</label>
+        <input type="text" id="nusername" name="nusername">
+        <label for="npassword">password:</label>
+        <input type="password" id="npassword" name="npassword">
+        <input type="submit" value="Sign Up">
+    </form>
+
+    <h1>Login</h1>
+    <form action="/login" method="POST">
+        <label for="username">username:</label>
+        <input type="text" id="username" name="username">
+        <label for="password">password:</label>
+        <input type="password" id="password" name="password">
+        <input type="submit" name="login_button" value="Login">
     </form>
 </html>
