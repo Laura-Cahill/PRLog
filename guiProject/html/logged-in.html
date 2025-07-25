@@ -1,0 +1,16 @@
+<html>
+    <h1>hello {{.username}}, your password is {{.password}}, enter some data!</h1>
+<form action="/userInfo" method="POST">
+    <input type="hidden" name="username" value="{{.username}}">
+    <input type="hidden" name="password" value="{{.password}}">
+    <input type="text" name="name" placeholder="Name" value="{{.name}}">
+    <input type="number" name="age" placeholder="Age" value="{{.age}}">
+    <input type="text" name="color" placeholder="color" value="{{.color}}">
+    <button type="submit">Save Info</button>
+</form>
+
+    <h1>current data:</h1>
+    <p>name: {{.name}}</p>
+    <p>age: {{.age}}</p>
+    <p>favorite color: {{.color}}</p>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PRLog</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white text-black font-sans">
+  <!-- Navbar -->
+  <header class="flex justify-between items-center px-6 py-4">
+    <div class="text-lg font-semibold">PRLog</div>
+    <nav class="flex items-center space-x-6">
+      <a href="/index" class="hover:underline">Home</a>
+      <a href="#" class="hover:underline">Features</a>
+      <a href="/loginPage" class="hover:underline">Log in</a>
+      <a href="/signupPage" class="bg-black text-white px-4 py-2 rounded hover:opacity-90">Sign up</a>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex flex-col items-center justify-center text-center px-4 py-24">
+    <h1 class="text-6xl font-extrabold text-purple-300 tracking-wide mb-6">PRLOG</h1>
+    <h2 class="text-3xl font-bold mb-4">Welcome to PRLog!</h2>
+    <p class="text-gray-600 max-w-xl mb-8">
+      Your personal workout tracker. Track your sets, reps, and weights –
+      get visual feedback on your performance, and more!
+    </p>
+    <a href="/signupPage" class="bg-black text-white px-6 py-3 rounded hover:opacity-90">
+      Get started
+    </a>
+    <!-- <h1>hello {{.Name}}</h1>
+    <form action="/submit" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        <input type="submit" value="Submit">
+    </form> -->
+  </main>
+</body>
+</html>
