@@ -24,7 +24,7 @@ func setRoutes(app *fiber.App) {
         
         if (key_exists(username)) {
             fmt.Printf("user exists already")
-            return c.Render("index", fiber.Map{
+            return c.Render("signupPage", fiber.Map{
                 "warning": "User already exists! Log in instead!",
                 "Name": "User",
             })
@@ -75,7 +75,7 @@ func setRoutes(app *fiber.App) {
 
             fmt.Println("DEBUG: User doesn't exist")
 
-            return c.Render("index", fiber.Map{
+            return c.Render("loginPage", fiber.Map{
                 "warning": "Username not found! Sign up!",
                 "Name": "User",
             })
@@ -86,7 +86,7 @@ func setRoutes(app *fiber.App) {
             if (value != password){
                 fmt.Printf("wrong password")
 
-                return c.Render("index", fiber.Map{
+                return c.Render("loginPage", fiber.Map{
                     "warning": "Wrong password, check your spelling",
                     "Name": "User",
 
