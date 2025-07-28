@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PRLog</title>
+</head>
+
+<body>
+    <a href="/home" class="hover:underline">Home</a>
+    <a href="/features" class="hover:underline">Features</a>
+    <a href="/addWorkout" class="hover:underline">My Log</a>
+    <a href="/userProfile" class="hover:underline">Profile</a>
+    <br>
+
+
+    <h1>My Log:</h1>
+    <p> here you can blah blah blah</p>
+    <a href="/calendar" class="hover:underline">Calendar</a>
+    <a href="/createGraph" class="hover:underline">Create Graph</a>
+
+    <h1>Add a workout!</h1>
+    <p> tell us what blah blah blah</p>
+
+    {{ if .AddError }}
+        <p class="error">{{ .AddError }}</p>
+    {{ end }}
+    {{ if .Success }}
+        <p class="success">{{ .Success }}</p>
+    {{ end }}
+    
+    <form action="/addWorkout/add" method="POST">
+        
+        <div class="form-group">
+            <label>Exercise:</label>
+            <input type="text" name="exercise" required>
+        </div>
+        
+        <div class="form-group">
+            <label>Sets:</label>
+            <input type="number" name="sets" min="1" required>
+        </div>
+        
+        <div class="form-group">
+            <label>Reps:</label>
+            <input type="number" name="reps" min="1" required>
+        </div>
+        
+        <div class="form-group">
+            <label>Weight:</label>
+            <input type="number" name="weight" min="0" required>
+        </div>
+        
+        <button type="submit">Add Exercise</button>
+
+    </form>
+
+
+
+</body>

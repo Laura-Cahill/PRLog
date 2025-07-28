@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PRLog</title>
+</head>
+<body>
+
+    <a href="/home" class="hover:underline">Home</a>
+    <a href="/features" class="hover:underline">Features</a>
+    <a href="/addWorkout" class="hover:underline">My Log</a>
+    <a href="/userProfile" class="hover:underline">Profile</a>
+    
+    <br>
+
+    <a href="/addWorkout" class="hover:underline">Add Workout</a>
+    <a href="/createGraph" class="hover:underline">Create Graph</a>
+    
+    <div class="section">
+        <h2>View Workouts</h2>
+
+        <!-- if this page was rendered with an error, display it -->
+        {{ if .Error }}
+            <p class="error">{{ .Error }}</p>
+        {{ end }}
+        
+        <form action="/displayWOs" method="GET">
+            
+            <div class="form-group">
+                <label>Date:</label>
+                <input type="date" name="date" value="{{ .Date }}" required> <!-- defaults to current date -->
+            </div>
+            
+            <button type="submit">View Workout</button>
+        </form>
+        
+        <!-- if this page was rendered with a workout, display it -->
+
+        {{ if .Workout }}
+
+        <div>
+
+            <h3>Workout on {{ .Workout.date }}</h3> <!-- workout date data -->
+
+            <!-- loop over .Workout key value pairs, and create variables exercise and params to hold + display them -->
+            {{ range $exercise, $params := .Workout }}
+
+
+                {{ if ne $exercise "date" }} <!-- excludes date key -->
+
+                <div>
+                    <strong>{{ $exercise }}</strong>:
+                    {{ index $params 0 }} sets 
+                    {{ index $params 1 }} reps 
+                    {{ index $params 2 }} lbs
+                </div>
+
+                {{ end }}
+            {{ end }} <!-- end loop -->
+        </div>
+        {{ end }}
+    </div>
+
+</body>
