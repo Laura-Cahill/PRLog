@@ -2,7 +2,8 @@ package main
 
 import (
     "context"
-//    "fmt"
+    "fmt"
+    "time"
     "github.com/gofiber/fiber/v2"
     "github.com/redis/go-redis/v9"
 //    "encoding/json"
@@ -16,8 +17,12 @@ type User struct {
     Username string `json:"username"`
     Password string `json:"password"`
     Name     string `json:"name"`
-    Age      int    `json:"age"`
+    Age      string    `json:"age"`
     Color    string `json:"color"`
+    Workouts map[string]map[string]any  `json:"workouts"`
+    Logged string `json:"logged"`
+    Since string `json:"since"`
+    Email string `json:"email"`
 }
 
 var (
@@ -55,6 +60,12 @@ func main() {
             "Name": "User",
         })
     })
+
+    //time for debug
+    currentTime := time.Now()
+	fmt.Println("Date:", currentTime.Format("2006-01-02"))
+	// Output: Date only: 2023-11-20
+
 
     //listens for users accessing website, logs if doesnt work
     log.Fatal(app.Listen("0.0.0.0:3000"))

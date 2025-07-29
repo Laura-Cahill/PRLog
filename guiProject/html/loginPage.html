@@ -1,11 +1,44 @@
-<html>
-<h1>{{.warning}}</h1>
-<h1>Login</h1>
-<form action="/login" method="POST">
-    <label for="username">username:</label>
-    <input type="text" id="username" name="username">
-    <label for="password">password:</label>
-    <input type="password" id="password" name="password">
-    <input type="submit" name="login_button" value="Login">
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Log In | PRLog</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white text-black font-sans min-h-screen pb-24">
+  <!-- Top Navbar -->
+  <header class="flex justify-between items-center px-6 py-4 border-b">
+    <h1 class="text-xl font-bold">PRLog</h1>
+    <nav class="space-x-4 hidden md:block">
+      <a href="index.html" class="text-gray-700 hover:underline">Home</a>
+      <a href="features.html" class="text-gray-700 hover:underline">Features</a>
+      <a href="loginPage.html" class="text-black font-semibold underline">Log in</a>
+      <a href="signupPage.html" class="text-gray-700 hover:underline">Sign up</a>
+    </nav>
+  </header>
+
+  <!-- Form -->
+  <main class="flex justify-center px-4 pt-10">
+    <div class="w-full max-w-md space-y-6">
+      <h2 class="text-3xl font-bold text-center">Log in to your account</h2>
+      <form action="/login" method="POST" class="space-y-4">
+        <input type="text" name="username" placeholder="Username" required class="w-full px-4 py-2 border rounded" />
+        <input type="password" name="password" placeholder="Password" required class="w-full px-4 py-2 border rounded" />
+        <button type="submit" class="w-full bg-black text-white py-2 rounded hover:opacity-90">Log In</button>
+      </form>
+      <p class="text-center text-sm text-gray-600">
+        Don't have an account?
+        <a href="signupPage.html" class="text-purple-600 hover:underline">Sign up</a>
+      </p>
+    </div>
+  </main>
+
+  <!-- Bottom Navbar -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t flex justify-around items-center py-3 md:hidden z-50">
+    <a href="index.html" class="text-sm text-gray-700 hover:text-black">Home</a>
+    <a href="features.html" class="text-sm text-gray-700 hover:text-black">Features</a>
+    <a href="signupPage.html" class="text-sm text-gray-700 hover:text-black">Sign up</a>
+    <a href="loginPage.html" class="text-sm text-black font-semibold underline">Log in</a>
+  </nav>
+</body>
 </html>

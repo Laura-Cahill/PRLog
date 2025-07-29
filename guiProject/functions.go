@@ -3,30 +3,18 @@ package main
 import (
 //    "context"
     "fmt"
-//    "github.com/gofiber/fiber/v2"
+    "github.com/gofiber/fiber/v2"
     "github.com/redis/go-redis/v9"
     "encoding/json"
+    "time"
 //    "github.com/gofiber/template/html/v2"
 //    "github.com/gofiber/fiber/v2/middleware/session"
 //    "log"
 )
 
-func key_exists(key string) (bool) {
+//-----------------------------------------------------
 
-    exists, err := rdb.Exists(ctx, key).Result()
-    
-    if err != nil {
-        panic(err)
-    }
-    if exists > 0 {
-        return true
-    } else {
-        return false
-    }
-
-}
-
-
+//initalize redis for the start of the program
 func initRedis() {
     //initialize redis
     rdb = redis.NewClient(&redis.Options{
@@ -42,14 +30,41 @@ func initRedis() {
     fmt.Println("Connected to Redis")
 }
 
+//check if key exists, should likely be used for users only
+func key_exists(key string) (bool) {
+
+    //checks if key exists
+    exists, err := rdb.Exists(ctx, key).Result()
+    
+    //if checking failed, panic
+    if err != nil {
+        panic(err)
+    }
+    //return if it exists or not
+    if exists > 0 {
+        return true
+    } else {
+        return false
+    }
+
+}
+
+//create a new user and add them to the database
 func create_new_user(username string, password string) error {
+
+    currentTime := time.Now()
+	var date = currentTime.Format("01-02-2006")
+
     // Create a user object
     newUser := User{
         Username: username,
         Password: password,
         Name:     "",
-        Age:      0,
+        Age:      "0",
         Color:    "",
+        Logged: "0",
+        Since: date,
+        Email: "",
     }
     
     // Convert user to JSON string
@@ -70,7 +85,7 @@ func create_new_user(username string, password string) error {
     return nil
 }
 
-
+//get user data frrom their username, and the goal data type (like age or email)
 func GetUserData(username string, dataType string) (interface{}, error) {
 
     //get the user's data json from redis
@@ -100,7 +115,7 @@ func GetUserData(username string, dataType string) (interface{}, error) {
     panic(err)
 }
 
-
+//set user data with username, data type, and the data
 func SetUserData(username string, field string, value interface{}) error {
     //get existing user data from Redis
     userJson, err := rdb.Get(ctx, username).Result()
@@ -134,3 +149,123 @@ func SetUserData(username string, field string, value interface{}) error {
 
     return nil
 }
+
+//get the username of the current session. call with getUser(c) 
+func getUser(c *fiber.Ctx) string {
+
+    sess, err := store.Get(c)
+    if err != nil {
+        panic(err)
+    }
+        
+    //get username from session and turn to string
+    username := sess.Get("username")
+
+    if username == nil {
+        return ""
+    } else {
+        return username.(string)
+    }
+
+
+}
+
+//adds workout to a user's data. int params are: sets, reps, pounds
+//bug: only one workout with a a workout name (squats) can be entered at once
+func AddWorkout(username string, date string, exerciseName string, params [3]int) error {
+
+    //get full existing user data
+    userData, err := rdb.Get(ctx, username).Result()
+
+    if err != nil {
+        panic(err)
+    }
+
+    //change into User struct
+    var user User
+
+    //try to unmarshall userData into user
+    if err := json.Unmarshal([]byte(userData), &user); err != nil {
+        panic(err)
+    }
+
+    //initialize empty Workouts item if nil
+    if user.Workouts == nil {
+
+        user.Workouts = make(map[string]map[string]interface{}) //Workouts: [map of ids paired with workout maps]
+
+    }
+
+    //create id with date
+    workoutID := "workout_" + date
+
+    //if this workout date id is not mapped to any value
+    if user.Workouts[workoutID] == nil {
+
+        user.Workouts[workoutID] = make(map[string]interface{}) //change value to be a map of interfaces values paired with string keys
+
+        user.Workouts[workoutID]["date"] = date //the "date:" is mapped to a string of the current date. the rest is left empty.
+
+    }
+
+    //add exercise
+    //bug to fix: if exercise name exists, it will be overridden
+    user.Workouts[workoutID][exerciseName] = params
+
+    //make it back into json
+    userJson, err := json.Marshal(user)
+    if err != nil {
+        panic(err)
+    }
+    
+    //set to database and return errors
+    return rdb.Set(ctx, username, userJson, 0).Err()
+}
+
+//get a workout from a user with a specific date
+func GetWorkout(username string, date string) (map[string]interface{}, error) {
+    //get user data from Redis
+    userData, err := rdb.Get(ctx, username).Result()
+
+    //if key not found:
+    if err == redis.Nil {
+
+        return nil, fmt.Errorf("user not found")
+
+    } else if err != nil { //if something else is the issue
+        panic(err)
+    }
+
+    //unmarshall json into a map
+    var user map[string]interface{}
+    if err := json.Unmarshal([]byte(userData), &user); err != nil {
+        panic(err)
+    }
+
+    //check if workouts exist
+    if user["workouts"] == nil {
+        return nil, fmt.Errorf("no workouts found for user")
+    }
+
+    workouts := user["workouts"].(map[string]interface{})
+
+    //look up workout with date
+    workoutID := "workout_" + date
+    if workouts[workoutID] == nil {
+
+        return nil, fmt.Errorf("no workout found on %s", date)
+
+    }
+
+    //create workout map
+    workout := workouts[workoutID].(map[string]interface{})
+
+    //return the workout map 
+    return workout, nil
+}
+
+
+// ------------------------------------
+
+
+

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Calendar | PRLog</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white text-black font-sans min-h-screen pb-24">
+   <!-- Top Navbar -->
+  <header class="flex justify-between items-center px-6 py-4 border-b">
+    <h1 class="text-xl font-bold">PRLog</h1>
+    <nav class="space-x-4 hidden md:block">
+      <a href="index.html" class="text-gray-700 hover:underline">Home</a>
+      <a href="features.html" class="text-gray-700 hover:underline">Features</a>
+      <a href="dashboard.html" class="text-black font-semibold underline">My Log</a>
+      <a href="profile.html" class="text-gray-700 hover:underline">Profile</a>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="p-6 max-w-xl mx-auto space-y-6">
+    <h2 class="text-3xl font-bold">Workout Calendar</h2>
+    <p class="text-gray-600">Pick a date to view your workout for that day.</p>
+
+    <form action="/displayWOs" method="GET" class="space-y-4">
+      <div>
+        <label for="date" class="block font-medium mb-1">Select a date</label>
+        <input type="date" name="date" id="date" required class="w-full border px-3 py-2 rounded" />
+      </div>
+      <button type="submit" class="bg-black text-white px-4 py-2 rounded hover:opacity-90">
+        View Workout
+      </button>
+    </form>
+
+    <!-- Example Go Template Output (optional) -->
+    {{ if .Workout }}
+      <div class="mt-6 border-t pt-4">
+        <h3 class="text-xl font-semibold mb-2">Workout on {{ .Workout.date }}</h3>
+        {{ range $exercise, $params := .Workout }}
+          {{ if ne $exercise "date" }}
+            <div class="mb-2">
+              <strong>{{ $exercise }}</strong>:
+              {{ index $params 0 }} sets,
+              {{ index $params 1 }} reps,
+              {{ index $params 2 }} lbs
+            </div>
+          {{ end }}
+        {{ end }}
+      </div>
+    {{ end }}
+  </main>
+
+  <!-- Bottom Mobile Nav -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t flex justify-around items-center py-3 md:hidden z-50">
+    <a href="index.html" class="text-sm text-gray-700 hover:text-black">Home</a>
+    <a href="features.html" class="text-sm text-gray-700 hover:text-black">Features</a>
+    <a href="dashboard.html" class="text-sm text-black font-semibold underline">My Log</a>
+    <a href="profile.html" class="text-sm text-gray-700 hover:text-black">Profile</a>
+  </nav>
+</body>
+</html>
