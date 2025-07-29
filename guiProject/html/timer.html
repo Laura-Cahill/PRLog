@@ -1,0 +1,86 @@
+<!-- timer.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Workout Timer | PRLog</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    .hidden {
+      display: none;
+    }
+
+    .mode-tab.active {
+      background-color: #a78bfa; /* purple-400 */
+      color: white;
+      border: none;
+    }
+
+    .timer-section {
+      border: 1px solid #e5e7eb; /* Tailwind's gray-200 */
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+  </style>
+</head>
+<body class="bg-white text-black font-sans">
+
+  <!-- Navbar -->
+   <header class="flex justify-between items-center px-6 py-4">
+    <div class="text-lg font-semibold">PRLog</div>
+    <nav class="flex items-center space-x-6">
+      <a href="index.html" class="hover:underline">Home</a>
+      <a href="features.html" class="hover:underline">Features</a>
+      <a href="#" class="hover:underline">My Log</a>
+      <a href="#" class="bg-black text-white px-4 py-2 rounded hover:opacity-90">User's Profile</a>
+    </nav>
+   </header>
+
+   <!-- Main Timer Section -->
+    <main class="flex flex-col items-center justify-center text-center px-4 py-24">
+    <h1 class="text-4xl font-bold text-purple-400 mb-6">Workout Timer</h1>
+    <p class="text-gray-600 mb-12 max-w-lg">
+      Use this timer to track your workouts or rest periods between sets.
+    </p>
+
+    <!-- Timer -->
+    <div class="w-full max-w-md mx-auto">
+      <!-- Mode Selector -->
+       <div class="flex justify-center space-x-4 mb-6">
+        <button id="countdownTab" class="mode-tab text-white border border-purple-400 bg-purple-400 px-4 py-2 rounded">Countdown</button>
+        <button id="stopwatchTab" class="mode-tab text-purple-400 border border-purple-400 px-4 py-2 rounded">Stopwatch</button>
+       </div>
+
+       <!-- Countdown Timer UI -->
+       <div id="countdownUI" class="timer-section">
+        <div class="mb-4">
+          <label class="block text-left mb-1">Minutes:</label>
+          <input id="countdownMinutes" type="number" min="0" class="w-full border px-3 py-2 rounded mb-2" />
+          <label class="block text-left mb-1">Seconds:</label>
+          <input id="countdownSeconds" type="number" min="0" max="59" class="w-full border px-3 py-2 rounded" />
+        </div>
+        <div id="countdownDisplay" class="text-4xl font-bold my-4">00:00</div>
+        <div class="flex justify-center space-x-6">
+          <button id="startCountdown" class="bg-purple-400 text-white px-4 py-2 rounded hover:bg-purple-500 active:bg-purple-600 active:scale-95 transition transform duration-75">Start</button>
+          <button id="pauseCountdown" class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition transform duration-75">Pause</button>
+          <button id="resetCountdown" class="bg-red-400 text-white px-4 py-2 rounded hover:bg-red-500 active:bg-red-600 active:scale-95 transition transform duration-75">Reset</button>
+        </div>
+      </div>
+
+        <!-- Stopwatch UI -->
+        <div id="stopwatchUI" class="timer-section hidden">
+          <div id="stopwatchDisplay" class="text-4xl font-bold my-6 text-center">00:00</div>
+          <div class="flex justify-center space-x-6">
+            <button id="startStopwatch" class="bg-purple-400 text-white px-4 py-2 rounded hover:bg-purple-500 active:bg-purple-600 active:scale-95 transition transform duration-75">Start</button>
+            <button id="pauseStopwatch" class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition transform duration-75">Pause</button>
+            <button id="resetStopwatch" class="bg-red-400 text-white px-4 py-2 rounded hover:bg-red-500 active:bg-red-600 active:scale-95 transition transform duration-75">Reset</button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="/js/timer.js"></script>
+</body>
+</html>
