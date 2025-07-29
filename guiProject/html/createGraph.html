@@ -2,22 +2,65 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create Graph</title>
+  <title>Create Graph | PRLog</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-white text-black font-sans">
-  <!-- Navbar -->
-  <header class="flex justify-between items-center px-6 py-4">
-    <div class="text-lg font-semibold">PRLog</div>
-    <nav class="flex items-center space-x-6">
-      <a href="index" class="hover:underline">Home</a>
-      <a href="features" class="hover:underline">Features</a>
-      <a href="dashboard.html" class="hover:underline">My Log</a>
-      <a href="userProfile" class="hover:underline">Profile</a>
+<body class="bg-white text-black font-sans min-h-screen pb-24">
+  <!-- Top Navbar -->
+  <header class="flex justify-between items-center px-6 py-4 border-b">
+    <h1 class="text-xl font-bold">PRLog</h1>
+    <nav class="space-x-4 hidden md:block">
+      <a href="index.html" class="text-gray-700 hover:underline">Home</a>
+      <a href="features.html" class="text-gray-700 hover:underline">Features</a>
+      <a href="dashboard.html" class="text-black font-semibold underline">My Log</a>
+      <a href="profile.html" class="text-gray-700 hover:underline">Profile</a>
     </nav>
   </header>
-  <br>
-    <a href="addWorkout" class="hover:underline">Add Workout</a>
-    <a href="calendar" class="hover:underline">Calendar</a>
 
+  <!-- Main Content -->
+  <main class="max-w-2xl mx-auto px-4 py-12 text-center">
+    <h2 class="text-4xl font-bold text-purple-500 mb-2">Create a Graph</h2>
+    <p class="text-gray-600 mb-8">Select a date range and a workout to graph your progress over time.</p>
+
+    <form action="/generateGraph" method="GET" class="space-y-4">
+      <!-- Start Date -->
+      <div>
+        <label for="startDate" class="block font-medium mb-1">Start Date</label>
+        <input type="date" name="startDate" id="startDate" required class="w-full border px-3 py-2 rounded" />
+      </div>
+
+      <!-- End Date -->
+      <div>
+        <label for="endDate" class="block font-medium mb-1">End Date</label>
+        <input type="date" name="endDate" id="endDate" required class="w-full border px-3 py-2 rounded" />
+      </div>
+
+      <!-- Workout Selection -->
+      <div>
+        <label for="workout" class="block font-medium mb-1">Workout</label>
+        <select name="workout" id="workout" required class="w-full border px-3 py-2 rounded">
+          <option value="">-- Select a Workout --</option>
+          <option value="Bench Press">Bench Press</option>
+          <option value="Deadlift">Deadlift</option>
+          <option value="Squat">Squat</option>
+          <option value="Overhead Press">Overhead Press</option>
+          <!-- We can add more later, or even better, pull only workout names that appear between selected dates -->
+        </select>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="bg-black text-white px-4 py-2 rounded hover:opacity-90">
+        Graph It!
+      </button>
+    </form>
+  </main>
+
+  <!-- Bottom Mobile Nav -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t flex justify-around items-center py-3 md:hidden z-50">
+    <a href="index.html" class="text-sm text-gray-700 hover:text-black">Home</a>
+    <a href="features.html" class="text-sm text-gray-700 hover:text-black">Features</a>
+    <a href="dashboard.html" class="text-sm text-black font-semibold underline">My Log</a>
+    <a href="profile.html" class="text-sm text-gray-700 hover:text-black">Profile</a>
+  </nav>
 </body>
+</html>
