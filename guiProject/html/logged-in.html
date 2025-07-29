@@ -1,4 +1,23 @@
-<html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PRLog</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white text-black font-sans">
+  <!-- Navbar -->
+  <header class="flex justify-between items-center px-6 py-4">
+    <div class="text-lg font-semibold">PRLog</div>
+    <nav class="flex items-center space-x-6">
+      <a href="index" class="hover:underline">Home</a>
+      <a href="features" class="hover:underline">Features</a>
+      <a href="loginPage" class="hover:underline">Log in</a>
+      <a href="signupPage" class="bg-black text-white px-4 py-2 rounded hover:opacity-90">Sign up</a>
+    </nav>
+  </header>
     <h1>hello {{.username}}, your password is {{.password}}, enter some data!</h1>
 <form action="/userInfo" method="POST">
     <input type="hidden" name="username" value="{{.username}}">

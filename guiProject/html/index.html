@@ -1,40 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PRLog</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-white text-black font-sans">
-  <!-- Navbar -->
-  <header class="flex justify-between items-center px-6 py-4">
-    <div class="text-lg font-semibold">PRLog</div>
-    <nav class="flex items-center space-x-6">
-      <a href="/index" class="hover:underline">Home</a>
-      <a href="/features" class="hover:underline">Features</a>
-      <a href="/loginPage" class="hover:underline">Log in</a>
-      <a href="/signupPage" class="bg-black text-white px-4 py-2 rounded hover:opacity-90">Sign up</a>
-    </nav>
-  </header>
+  <head>
+    <meta charset="UTF-8" />
+    <title>PRLog Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-white text-black font-sans">
+    <!-- Header -->
+    <header class="flex justify-between items-center px-6 py-4">
+      <h1 class="text-xl font-bold">PRLog</h1>
+      <nav class="space-x-6 hidden md:block">
+        <a href="index.html" class="text-gray-700 hover:underline">Home</a>
+        <a href="features.html" class="text-gray-700 hover:underline">Features</a>
+        <a href="loginPage.html" class="text-gray-700 hover:underline">Log in</a>
+        <a href="signupPage.html" class="bg-black text-white px-3 py-1 rounded">Sign up</a>
+      </nav>
+    </header>
 
-  <!-- Main Content -->
-  <main class="flex flex-col items-center justify-center text-center px-4 py-24">
-    <h1 class="text-6xl font-extrabold text-purple-300 tracking-wide mb-6">PRLOG</h1>
-    <h2 class="text-3xl font-bold mb-4">Welcome to PRLog!</h2>
-    <p class="text-gray-600 max-w-xl mb-8">
-      Your personal workout tracker. Track your sets, reps, and weights –
-      get visual feedback on your performance, and more!
-    </p>
-    <a href="/signupPage" class="bg-black text-white px-6 py-3 rounded hover:opacity-90">
-      Get started
-    </a>
-    <!-- <h1>hello {{.Name}}</h1>
-    <form action="/submit" method="POST">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name">
-        <input type="submit" value="Submit">
-    </form> -->
-  </main>
-</body>
+    <!-- Hero -->
+    <section class="text-center py-16">
+      <h2 class="text-6xl font-bold text-purple-400 mb-4">PRLOG</h2>
+      <h3 class="text-3xl font-bold mb-4">Welcome to PRLog!</h3>
+      <p class="text-gray-600 mb-6 max-w-xl mx-auto">
+        Your personal workout tracker. Track your sets, reps, and weights – get visual feedback on your performance, and more!
+      </p>
+      <a href="signupPage.html" class="bg-black text-white px-6 py-2 rounded hover:opacity-90">Get started</a>
+    </section>
+
+    <!-- What PRLog can do -->
+    <section class="px-6 py-12 max-w-6xl mx-auto">
+      <h4 class="text-2xl font-bold mb-8">What PRLog can do for you:</h4>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="text-center">
+          <img src="https://img.icons8.com/ios-filled/100/000000/note.png" class="mx-auto mb-4" />
+          <h5 class="font-semibold text-purple-700 mb-2">Log Workouts</h5>
+          <p class="text-gray-600 text-sm">
+            PRL is designed to make logging workouts easy. Simply add a workout, input your sets, reps, and weights lifted, then add it to your log. You can look back at and check out your past workouts.
+          </p>
+        </div>
+        <div class="text-center">
+          <img src="https://img.icons8.com/ios/100/000000/combo-chart.png" class="mx-auto mb-4" />
+          <h5 class="font-semibold text-purple-700 mb-2">Visual Graphs</h5>
+          <p class="text-gray-600 text-sm">
+            We take your notes and go one step further by creating graphs of your workouts over time so you can track your progress, identify any sticking points, and reach your fitness goals.
+          </p>
+        </div>
+        <div class="text-center">
+          <img src="https://img.icons8.com/ios/100/000000/stopwatch.png" class="mx-auto mb-4" />
+          <h5 class="font-semibold text-purple-700 mb-2">Timers and Reminders</h5>
+          <p class="text-gray-600 text-sm">
+            PRLog is your one stop shop for all of your workouts. Need a timer for your next circuit? We got you covered! How about a friendly reminder for your next workout? We can do that too.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t mt-16 px-6 py-4 text-sm text-gray-500 flex justify-between items-center">
+      <span>PRLog</span>
+      <div class="space-x-4">
+        <a href="index.html" class="hover:underline">Home</a>
+        <a href="features.html" class="hover:underline">Features</a>
+        <a href="signupPage.html" class="hover:underline">Sign Up</a>
+      </div>
+    </footer>
+  </body>
 </html>

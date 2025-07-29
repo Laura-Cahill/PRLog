@@ -1,11 +1,48 @@
-<html>
-<h1>{{.warning}}</h1>
-<h1>Sign Up</h1>
-<form action="/signup" method="POST">
-    <label for="nusername">username:</label>
-    <input type="text" id="nusername" name="nusername">
-    <label for="npassword">password:</label>
-    <input type="password" id="npassword" name="npassword">
-    <input type="submit" value="Sign Up">
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sign Up | PRLog</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white text-black font-sans min-h-screen pb-24">
+  <!-- Top Navbar -->
+  <header class="flex justify-between items-center px-6 py-4 border-b">
+    <h1 class="text-xl font-bold">PRLog</h1>
+    <nav class="space-x-4 hidden md:block">
+      <a href="index.html" class="text-gray-700 hover:underline">Home</a>
+      <a href="features.html" class="text-gray-700 hover:underline">Features</a>
+      <a href="loginPage.html" class="text-gray-700 hover:underline">Log in</a>
+      <a href="signupPage.html" class="text-black font-semibold underline">Sign up</a>
+    </nav>
+  </header>
+
+  <!-- Form -->
+  <main class="flex justify-center px-4 pt-10">
+    <div class="w-full max-w-md space-y-6">
+      <h2 class="text-3xl font-bold text-center">Create your account</h2>
+      <form action="/signup" method="POST" class="space-y-4">
+        <input type="text" name="username" placeholder="Username" required class="w-full px-4 py-2 border rounded" />
+        <input type="email" name="email" placeholder="Email" required class="w-full px-4 py-2 border rounded" />
+        <input type="password" name="password" placeholder="Password" required class="w-full px-4 py-2 border rounded" />
+        <input type="text" name="name" placeholder="Name" required class="w-full px-4 py-2 border rounded" />
+        <input type="number" name="age" placeholder="Age" required class="w-full px-4 py-2 border rounded" />
+        <input type="text" name="color" placeholder="Favorite Color" required class="w-full px-4 py-2 border rounded" />
+        <button type="submit" class="w-full bg-black text-white py-2 rounded hover:opacity-90">Sign Up</button>
+      </form>
+      <p class="text-center text-sm text-gray-600">
+        Already have an account?
+        <a href="loginPage.html" class="text-purple-600 hover:underline">Log in</a>
+      </p>
+    </div>
+  </main>
+
+  <!-- Bottom Navbar -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t flex justify-around items-center py-3 md:hidden z-50">
+    <a href="index.html" class="text-sm text-gray-700 hover:text-black">Home</a>
+    <a href="features.html" class="text-sm text-gray-700 hover:text-black">Features</a>
+    <a href="signupPage.html" class="text-sm text-black font-semibold underline">Sign up</a>
+    <a href="loginPage.html" class="text-sm text-gray-700 hover:text-black">Log in</a>
+  </nav>
+</body>
 </html>
