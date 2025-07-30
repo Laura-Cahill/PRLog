@@ -214,6 +214,11 @@ func setRoutes(app *fiber.App) {
         })
     })
 
+    app.Post("/generateGraph", func(c *fiber.Ctx) error {
+        return c.Render("createGraph", fiber.Map{
+        })
+    })
+
     //====================[PAGES]========================
 
     //what happens when user visits the main page
