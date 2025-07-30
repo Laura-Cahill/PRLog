@@ -10,10 +10,10 @@
   <header class="flex justify-between items-center px-6 py-4 border-b">
     <h1 class="text-xl font-bold">PRLog</h1>
     <nav class="space-x-4 hidden md:block">
-      <a href="index.html" class="text-gray-700 hover:underline">Home</a>
-      <a href="features.html" class="text-gray-700 hover:underline">Features</a>
-      <a href="dashboard.html" class="text-black font-semibold underline">My Log</a>
-      <a href="profile.html" class="text-gray-700 hover:underline">Profile</a>
+      <a href="/index" class="text-gray-700 hover:underline">Home</a>
+      <a href="/features" class="text-gray-700 hover:underline">Features</a>
+      <a href="/addWorkout" class="text-black font-semibold underline">My Log</a>
+      <a href="/userProfile" class="text-gray-700 hover:underline">Profile</a>
     </nav>
   </header>
 
@@ -21,6 +21,11 @@
   <main class="max-w-2xl mx-auto px-4 py-12 text-center">
     <h2 class="text-4xl font-bold text-purple-500 mb-2">Create a Graph</h2>
     <p class="text-gray-600 mb-8">Select a date range and a workout to graph your progress over time.</p>
+
+    <div class="flex gap-4">
+      <a href="/addWorkout" class="bg-black text-white px-4 py-2 rounded hover:opacity-90">Add Workout</a>
+      <a href="/calendar" class="bg-black text-white px-4 py-2 rounded hover:opacity-90">View Calendar</a>
+    </div>
 
     <form action="/generateGraph" method="GET" class="space-y-4">
       <!-- Start Date -->
@@ -59,9 +64,9 @@
     <footer class="border-t mt-16 px-6 py-4 text-sm text-gray-500 flex justify-between items-center">
       <span>PRLog</span>
       <div class="space-x-4">
-        <a href="index.html" class="hover:underline">Home</a>
-        <a href="features.html" class="hover:underline">Features</a>
-        <a href="signupPage.html" class="hover:underline">Sign Up</a>
+        <a href="/index" class="hover:underline">Home</a>
+        <a href="/features" class="hover:underline">Features</a>
+        <a href="/signupPage" class="hover:underline">Sign Up</a>
       </div>
     </footer>
 </body>

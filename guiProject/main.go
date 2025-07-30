@@ -49,6 +49,7 @@ func main() {
     //serve static files once we need them
     app.Static("/css", "./css")
     app.Static("/js", "./js")
+    app.Static("/images", "./images")
 
     //sets all the routes we'll need later
     setRoutes(app)

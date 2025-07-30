@@ -21,8 +21,11 @@ func setRoutes(app *fiber.App) {
     app.Post("/signup", func(c *fiber.Ctx) error {
 
         //get the user and pass from the form
-        username := c.FormValue("nusername")
-        password := c.FormValue("npassword")
+        username := c.FormValue("username")
+        password := c.FormValue("password")
+        name := c.FormValue("name")
+        age := c.FormValue("age")
+        email := c.FormValue("email")
 
         //debug console print
         fmt.Printf("signing up %s with password %s\n", username, password)
@@ -48,6 +51,18 @@ func setRoutes(app *fiber.App) {
             //add the name to the database
             if err := create_new_user(username, password); err != nil {
                 fmt.Printf("adding user failed")
+                panic(err)
+            }
+            if err := SetUserData(username, "name", name); err != nil {
+                fmt.Printf("adding name failed")
+                panic(err)
+            }
+            if err := SetUserData(username, "age", age); err != nil {
+                fmt.Printf("adding age failed")
+                panic(err)
+            }
+            if err := SetUserData(username, "email", email); err != nil {
+                fmt.Printf("adding color failed")
                 panic(err)
             }
 
@@ -203,6 +218,10 @@ func setRoutes(app *fiber.App) {
 
     //what happens when user visits the main page
 	app.Get("/index", func(c *fiber.Ctx) error {
+        username := getUser(c)
+        if username != "" {
+            return c.Redirect("/home") //if logged in, go to logged in version
+        }
 		return c.Render("index", nil)
 	})
 
@@ -300,6 +319,11 @@ func setRoutes(app *fiber.App) {
         return c.Render("reminders", nil)
     })
 
+        //reminders page
+        app.Get("/dashboard", func(c *fiber.Ctx) error {
+            return c.Render("dashboard", nil)
+        })
+
     
 //=================[TEST AREA]===================
 
@@ -313,6 +337,8 @@ app.Get("/displayWOs", func(c *fiber.Ctx) error {
     }
 
     date := c.FormValue("date")
+    var origin string 
+    origin = c.FormValue("origin")
     
     var workout map[string]interface{}
     var err error
@@ -323,51 +349,31 @@ app.Get("/displayWOs", func(c *fiber.Ctx) error {
 
     }
     
+    if (origin == "addWorkout") {
     //rerender website to have workout, or maybe error
-    return c.Render("calendar", fiber.Map{
-        "Username": username,
-        "Date":     date,
-        "Workout":  workout,
-        "Error":    err,
-    })
+        return c.Render("addWorkout", fiber.Map{
+            "Username": username,
+            "Date":     date,
+            "Workout":  workout,
+            "Error":    err,
+        }) 
+    } else {    
+        
+        return c.Render("calendar", fiber.Map{
+            "Username": username,
+            "Date":     date,
+            "Workout":  workout,
+            "Error":    err,
+        })
+
+    }
+
+
+
+
 })
 
 //=========================
-
-app.Post("/workouts/add", func(c *fiber.Ctx) error {
-    username := c.FormValue("username")
-    date := c.FormValue("date")
-    exercise := c.FormValue("exercise")
-    sets, _ := strconv.Atoi(c.FormValue("sets"))
-    reps, _ := strconv.Atoi(c.FormValue("reps"))
-    weight, _ := strconv.Atoi(c.FormValue("weight"))
-    
-    err := AddWorkout(username, date, exercise, [3]int{sets, reps, weight})
-    
-    if err != nil {
-        return c.Render("workouts", fiber.Map{
-            "AddError": err.Error(),
-            "Username": username,
-            "Date":     date,
-        })
-    }
-    
-    workout, _ := GetWorkout(username, date)
-    return c.Render("workouts", fiber.Map{
-        "Username": username,
-        "Date":     date,
-        "Workout":  workout,
-        "Success":  "Workout added successfully!",
-    })
-})
-
-
-
-
-
-
-
-
 
 
 
