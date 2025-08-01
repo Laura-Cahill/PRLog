@@ -42,6 +42,12 @@
     <input type="email" name="email" placeholder="Email" value="{{.email}}" class="w-full border px-4 py-2 rounded" />
     <button type="submit" class="bg-black text-white px-6 py-2 rounded hover:opacity-90">Save Info</button>
   </form>
+  <div class="mt-8 text-center">
+
+    <form action="/logout" method="POST" class="inline">
+      <button type="submit" class="bg-black text-white px-6 py-2 rounded hover:opacity-90">Log Out</button>
+    </form>
+  </div>
 
     <!-- Footer -->
     <footer class="border-t mt-16 px-6 py-4 text-sm text-gray-500 flex justify-between items-center">

@@ -269,3 +269,46 @@ func GetWorkout(username string, date string) (map[string]interface{}, error) {
 
 
 
+
+func GetWorkoutsBetweenDates(username, startDate, endDate, exerciseName string) ([]WorkoutData, error) {
+
+    current, _ := time.Parse("2006-01-02", startDate)
+    end, _ := time.Parse("2006-01-02", endDate)
+
+    var workouts []WorkoutData
+    
+    // Iterate through each day in range
+    for !current.After(end) {
+
+        dateStr := current.Format("2006-01-02")
+
+        workout, err := GetWorkout(username, dateStr)
+
+        if err == nil && workout[exerciseName] != nil {
+
+            params := workout[exerciseName].([]interface{})
+            workouts = append(workouts, WorkoutData{
+
+                Date:   dateStr,
+                Sets:   int(params[0].(float64)),
+                Reps:   int(params[1].(float64)),
+                Weight: int(params[2].(float64)),
+
+            })
+        }
+
+        current = current.AddDate(0, 0, 1) // Next day
+    }
+
+    return workouts, nil
+}
+
+// WorkoutData represents a single workout record for graphing
+type WorkoutData struct {
+    Date   string `json:"date"`
+    Sets   int    `json:"sets"`
+    Reps   int    `json:"reps"`
+    Weight int    `json:"weight"`
+}
+
+

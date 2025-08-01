@@ -184,16 +184,25 @@ func setRoutes(app *fiber.App) {
 
     //what happens when user adds workout
     app.Post("/addWorkout/add", func(c *fiber.Ctx) error {
-
         //get all data
         username := getUser(c)
+
+        if username == "" {
+            return c.Redirect("/") // if not logged in, go to homepage
+        }
+    
         exercise := c.FormValue("exercise")
         sets, _ := strconv.Atoi(c.FormValue("sets"))
         reps, _ := strconv.Atoi(c.FormValue("reps"))
         weight, _ := strconv.Atoi(c.FormValue("weight"))
-        currentTime := time.Now()
-        date := currentTime.Format("2006-01-02")
-    
+        date := c.FormValue("date") // Get date from form
+        
+        // If no date specified, use today's date
+        if date == "" {
+            currentTime := time.Now()
+            date = currentTime.Format("2006-01-02")
+        }
+        
         //add workout and collect error
         err := AddWorkout(username, date, exercise, [3]int{sets, reps, weight})
         
@@ -214,9 +223,112 @@ func setRoutes(app *fiber.App) {
         })
     })
 
+    
+    app.Get("/displayWOs", func(c *fiber.Ctx) error {
+        
+        //get username from session and turn to string
+        username := getUser(c)
+
+        if username == "" {
+            return c.Redirect("/") //if not logged in, go to homepage
+        }
+
+        date := c.FormValue("date")
+        var origin string 
+        origin = c.FormValue("origin")
+        
+        var workout map[string]interface{}
+        var err error
+        
+        //if date isnt empty get the workouts from the day and store it in workout
+        if date != "" {
+            workout, err = GetWorkout(username, date)
+
+        }
+        
+        if (origin == "addWorkout") {
+        //rerender website to have workout, or maybe error
+            return c.Render("addWorkout", fiber.Map{
+                "Username": username,
+                "Date":     date,
+                "Workout":  workout,
+                "Error":    err,
+            }) 
+        } else {    
+            
+            return c.Render("calendar", fiber.Map{
+                "Username": username,
+                "Date":     date,
+                "Workout":  workout,
+                "Error":    err,
+            })
+
+        }
+
+
+    })
+    
+
     app.Post("/generateGraph", func(c *fiber.Ctx) error {
-        return c.Render("createGraph", fiber.Map{
+        username := getUser(c)
+        if username == "" {
+            return c.Redirect("/") //if not logged in, go to homepage
+        }
+    
+        //get form data
+        startDate := c.FormValue("startDate")
+        endDate := c.FormValue("endDate")
+        exercise := c.FormValue("workout")
+    
+        //get all workouts for this exercise
+        workouts, err := GetWorkoutsBetweenDates(username, startDate, endDate, exercise)
+        if err != nil {
+            return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+                "error": err.Error(),
+            })
+        }
+    
+        var dates []string
+        var weights []int
+        var reps []int
+        var sets []int
+    
+        //loop through workouts and saave into new arrays
+        for _, workout := range workouts {
+            dates = append(dates, workout.Date)
+            weights = append(weights, workout.Weight)
+            reps = append(reps, workout.Reps)
+            sets = append(sets, workout.Sets)
+        }
+    
+        return c.JSON(fiber.Map{
+            "exercise": exercise,
+            "dates":    dates,
+            "weights":  weights,
+            "reps":     reps,
+            "sets":     sets,
         })
+    
+    })
+
+    app.Post("/logout", func(c *fiber.Ctx) error {
+
+        username := getUser(c)
+        if username == "" {
+            return c.Redirect("/") //if not logged in, go to homepage
+        }
+
+        sess, err := store.Get(c)
+        if err != nil {
+            panic(err)
+        }
+        
+        //destroy session
+        if err := sess.Destroy(); err != nil {
+            panic(err)
+        }
+        
+        return c.Redirect("/")
     })
 
     //====================[PAGES]========================
@@ -296,7 +408,18 @@ func setRoutes(app *fiber.App) {
 
     //add workout page
     app.Get("/addWorkout", func(c *fiber.Ctx) error {
-        return c.Render("addWorkout", nil)
+        username := getUser(c)
+        if username == "" {
+            return c.Redirect("/") // if not logged in, go to homepage
+        }
+    
+        currentTime := time.Now()
+        date := currentTime.Format("2006-01-02")
+    
+        return c.Render("addWorkout", fiber.Map{
+            "Username": username,
+            "Date":     date,
+        })
     })
 
     //calendar page
@@ -324,61 +447,25 @@ func setRoutes(app *fiber.App) {
         return c.Render("reminders", nil)
     })
 
-        //reminders page
-        app.Get("/dashboard", func(c *fiber.Ctx) error {
-            return c.Render("dashboard", nil)
-        })
 
     
 //=================[TEST AREA]===================
 
-app.Get("/displayWOs", func(c *fiber.Ctx) error {
-    
-    //get username from session and turn to string
-    username := getUser(c)
-
-    if username == "" {
-        return c.Redirect("/") //if not logged in, go to homepage
-    }
-
-    date := c.FormValue("date")
-    var origin string 
-    origin = c.FormValue("origin")
-    
-    var workout map[string]interface{}
-    var err error
-    
-    //if date isnt empty get the workouts from the day and store it in workout
-    if date != "" {
-        workout, err = GetWorkout(username, date)
-
-    }
-    
-    if (origin == "addWorkout") {
-    //rerender website to have workout, or maybe error
-        return c.Render("addWorkout", fiber.Map{
-            "Username": username,
-            "Date":     date,
-            "Workout":  workout,
-            "Error":    err,
-        }) 
-    } else {    
-        
-        return c.Render("calendar", fiber.Map{
-            "Username": username,
-            "Date":     date,
-            "Workout":  workout,
-            "Error":    err,
-        })
-
-    }
-
-
-
-
-})
 
 //=========================
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
