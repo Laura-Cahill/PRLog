@@ -6,7 +6,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
-<body class="bg-white text-black font-sans">
+<body class="bg-white text-black font-sans min-h-screen flex flex-col">
+
   <!-- Navbar -->
   <header class="flex justify-between items-center px-6 py-4">
     <h1 class="text-xl font-bold">PRLog</h1>
@@ -18,45 +19,45 @@
     </nav>
   </header>
 
-  <!-- Profile Section -->
-  <main class="max-w-2xl mx-auto px-4 py-12 text-center">
+  <!-- Main Content -->
+  <main class="max-w-2xl mx-auto px-4 py-12 text-center grow">
     <h2 class="text-4xl font-bold text-purple-500 mb-2">My Profile</h2>
     <p class="text-gray-600 mb-8">This is your profile which has some information about your account.</p>
 
-  <!-- Info Table -->
-  <div class="grid grid-cols-2 text-left border border-gray-200 rounded overflow-hidden mb-8">
-    <div class="bg-purple-100 px-4 py-3 font-medium">Name:</div>
-    <div class="px-4 py-3">{{.name}}</div>
-    <div class="bg-purple-100 px-4 py-3 font-medium">Email:</div>
-    <div class="px-4 py-3">{{.email}}</div>
-    <div class="bg-purple-100 px-4 py-3 font-medium">Joined:</div>
-    <div class="px-4 py-3">{{.since}}</div>
-    <div class="bg-purple-100 px-4 py-3 font-medium">Workouts Logged:</div>
-    <div class="px-4 py-3">100</div> <!-- Will be adjusted dynamically -->
-  </div>
+    <!-- Info Table -->
+    <div class="grid grid-cols-2 text-left border border-gray-200 rounded overflow-hidden mb-8">
+      <div class="bg-purple-100 px-4 py-3 font-medium">Name:</div>
+      <div class="px-4 py-3">{{.name}}</div>
+      <div class="bg-purple-100 px-4 py-3 font-medium">Email:</div>
+      <div class="px-4 py-3">{{.email}}</div>
+      <div class="bg-purple-100 px-4 py-3 font-medium">Joined:</div>
+      <div class="px-4 py-3">{{.since}}</div>
+      <div class="bg-purple-100 px-4 py-3 font-medium">Workouts Logged:</div>
+      <div class="px-4 py-3">100</div>
+    </div>
 
-  <!-- Form to Edit Info -->
-  <form action="/userInfo" method="POST" class="space-y-4 text-left max-w-md mx-auto mb-10">
-    <input type="text" name="name" placeholder="Name" value="{{.name}}" class="w-full border px-4 py-2 rounded" />
-    <input type="number" name="age" placeholder="Age" value="{{.age}}" class="w-full border px-4 py-2 rounded" />
-    <input type="email" name="email" placeholder="Email" value="{{.email}}" class="w-full border px-4 py-2 rounded" />
-    <button type="submit" class="bg-black text-white px-6 py-2 rounded hover:opacity-90">Save Info</button>
-  </form>
-  <div class="mt-8 text-center">
+    <!-- Edit Info Form -->
+    <form action="/userInfo" method="POST" class="space-y-4 text-left max-w-md mx-auto mb-6">
+      <input type="text" name="name" placeholder="Name" value="{{.name}}" class="w-full border px-4 py-2 rounded" />
+      <input type="number" name="age" placeholder="Age" value="{{.age}}" class="w-full border px-4 py-2 rounded" />
+      <input type="email" name="email" placeholder="Email" value="{{.email}}" class="w-full border px-4 py-2 rounded" />
+      <button type="submit" class="bg-black text-white px-6 py-2 rounded hover:opacity-90">Save Info</button>
+    </form>
 
-    <form action="/logout" method="POST" class="inline">
+    <!-- Log Out Button -->
+    <form action="/logout" method="POST" class="text-center">
       <button type="submit" class="bg-black text-white px-6 py-2 rounded hover:opacity-90">Log Out</button>
     </form>
-  </div>
+  </main>
 
-    <!-- Footer -->
-    <footer class="border-t mt-16 px-6 py-4 text-sm text-gray-500 flex justify-between items-center">
-      <span>PRLog</span>
-      <div class="space-x-4">
-        <a href="/index" class="hover:underline">Home</a>
-        <a href="/features" class="hover:underline">Features</a>
-        <a href="/signupPage" class="hover:underline">Sign Up</a>
-      </div>
-    </footer>
+  <!-- Footer -->
+  <footer class="w-full border-t px-6 py-4 text-sm text-gray-500 flex justify-between items-center">
+    <span>PRLog</span>
+    <div class="space-x-4">
+      <a href="/index" class="hover:underline">Home</a>
+      <a href="/features" class="hover:underline">Features</a>
+      <a href="/signupPage" class="hover:underline">Sign Up</a>
+    </div>
+  </footer>
 </body>
 </html>
