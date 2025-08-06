@@ -277,7 +277,7 @@ func GetWorkoutsBetweenDates(username, startDate, endDate, exerciseName string) 
 
     var workouts []WorkoutData
     
-    // Iterate through each day in range
+    //oterate through each day in range
     for !current.After(end) {
 
         dateStr := current.Format("2006-01-02")
@@ -297,13 +297,13 @@ func GetWorkoutsBetweenDates(username, startDate, endDate, exerciseName string) 
             })
         }
 
-        current = current.AddDate(0, 0, 1) // Next day
+        current = current.AddDate(0, 0, 1) //next day
     }
 
     return workouts, nil
 }
 
-// WorkoutData represents a single workout record for graphing
+//workoutData represents a single workout record for graphing
 type WorkoutData struct {
     Date   string `json:"date"`
     Sets   int    `json:"sets"`

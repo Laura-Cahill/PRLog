@@ -9,6 +9,7 @@ import (
 //    "encoding/json"
 //    "log"
     "time"
+    "strings"
 )
 
 
@@ -38,7 +39,7 @@ func setRoutes(app *fiber.App) {
 
             //redisplays site with new warning
             return c.Render("signupPage", fiber.Map{
-                "warning": "User already exists! Log in instead!",
+                "AddError": "User already exists! Log in instead!",
                 "Name": "User",
             })
 
@@ -104,7 +105,7 @@ func setRoutes(app *fiber.App) {
             fmt.Println("DEBUG: User doesn't exist")
 
             return c.Render("loginPage", fiber.Map{
-                "warning": "Username not found! Sign up!",
+                "AddError": "Username not found! Sign up!",
                 "Name": "User",
             })
 
@@ -115,7 +116,7 @@ func setRoutes(app *fiber.App) {
                 fmt.Printf("wrong password")
 
                 return c.Render("loginPage", fiber.Map{
-                    "warning": "Wrong password, check your spelling",
+                    "AddError": "Wrong password, check your spelling",
                     "Name": "User",
 
                 })
@@ -191,7 +192,7 @@ func setRoutes(app *fiber.App) {
             return c.Redirect("/") // if not logged in, go to homepage
         }
     
-        exercise := c.FormValue("exercise")
+        exercise := strings.ToLower(c.FormValue("exercise"))
         sets, _ := strconv.Atoi(c.FormValue("sets"))
         reps, _ := strconv.Atoi(c.FormValue("reps"))
         weight, _ := strconv.Atoi(c.FormValue("weight"))
@@ -278,7 +279,7 @@ func setRoutes(app *fiber.App) {
         //get form data
         startDate := c.FormValue("startDate")
         endDate := c.FormValue("endDate")
-        exercise := c.FormValue("workout")
+        exercise := strings.ToLower(c.FormValue("workout"))
     
         //get all workouts for this exercise
         workouts, err := GetWorkoutsBetweenDates(username, startDate, endDate, exercise)

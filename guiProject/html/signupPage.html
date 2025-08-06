@@ -17,6 +17,8 @@
     </nav>
   </header>
 
+
+
   <!-- Form -->
   <main class="flex justify-center px-4 pt-10">
     <div class="w-full max-w-md space-y-6">
@@ -30,10 +32,17 @@
         <input type="text" name="color" placeholder="Favorite Color" required class="w-full px-4 py-2 border rounded" />
         <button type="submit" class="w-full bg-black text-white py-2 rounded hover:opacity-90">Sign Up</button>
       </form>
+
+      {{ if .AddError }}
+      <p class="text-red-500 justify-center text-center">{{ .AddError }}</p>
+      {{ end }}
+
       <p class="text-center text-sm text-gray-600">
         Already have an account?
         <a href="/loginPage" class="text-purple-600 hover:underline">Log in</a>
       </p>
+
+
     </div>
   </main>
 
