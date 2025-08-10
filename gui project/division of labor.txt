@@ -1,8 +1,0 @@
-division of labor:
-
--Laura worked on the backend, making the database set up, go functions to access it, routes to make the 
-buttons and links all work, and very very basic html/templating skeletons to pass to the front end devs
-
--Hajar worked on a lot of the front end design for most of the pages and the top and bottom nav bar
-
--Brandon implemented the features and wrote the memo
