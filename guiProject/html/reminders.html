@@ -9,15 +9,33 @@
   <!-- Navbar -->
   <header class="flex justify-between items-center px-6 py-4 border-b">
     <h1 class="text-lg font-bold">PRLog</h1>
-    <nav class="space-x-6">
+    <nav class="space-x-6 hidden md:flex items-center">
       <a href="/index" class="text-gray-700 hover:underline">Home</a>
       <a href="/features" class="text-gray-700 hover:underline">Features</a>
-      <a href="/addWorkout" class="text-gray-700 hover:underline">My Log</a>
-      <a href="/userProfile">
-        <button class="bg-black text-white px-4 py-2 rounded hover:opacity-90">
-          User's Profile
-        </button>
-      </a>
+
+      <!-- dropdown-->
+      <div class="relative group">
+
+        <div class="flex flex-col">
+          <a href="{{.dash1}}" class="text-gray-700 hover:underline">{{.name1}}</a>
+
+
+          <div class="h-2 absolute top-full w-full"></div>
+        </div>
+
+        {{ if .loggedIn }}
+        <div class="absolute hidden group-hover:block bg-white  w-48 z-10 border">
+          <a href="/addWorkout" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Add Workout</a>
+          <a href="/calendar" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Calendar</a>
+          <a href="/createGraph" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Create Graph</a>
+        </div>
+        {{ end }}
+        
+      </div>
+      <!-- -->
+
+      <a href="{{.dash2}}" class="bg-black text-white px-4 py-2 rounded hover:opacity-90">{{.name2}}</a> <!--sign up or profile-->
+
     </nav>
   </header>
 

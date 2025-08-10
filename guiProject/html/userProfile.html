@@ -9,15 +9,36 @@
 <body class="bg-white text-black font-sans min-h-screen flex flex-col">
 
   <!-- Navbar -->
-  <header class="flex justify-between items-center px-6 py-4">
-    <h1 class="text-xl font-bold">PRLog</h1>
-    <nav class="space-x-6 hidden md:block">
+  <header class="flex justify-between items-center px-6 py-4 border-b">
+    <h1 class="text-lg font-bold">PRLog</h1>
+    <nav class="space-x-6 hidden md:flex items-center">
       <a href="/index" class="text-gray-700 hover:underline">Home</a>
       <a href="/features" class="text-gray-700 hover:underline">Features</a>
-      <a href="/addWorkout" class="text-gray-700 hover:underline">My Log</a>
-      <a href="/userProfile" class="bg-black text-white px-4 py-2 rounded hover:opacity-90">User's Profile</a>
+
+      <!-- dropdown-->
+      <div class="relative group">
+
+        <div class="flex flex-col">
+          <a href="/addWorkout" class="text-gray-700 hover:underline">My Log</a>
+
+
+          <div class="h-2 absolute top-full w-full"></div>
+        </div>
+
+        <div class="absolute hidden group-hover:block bg-white  w-48 z-10 border">
+          <a href="/addWorkout" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Add Workout</a>
+          <a href="/calendar" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Calendar</a>
+          <a href="/createGraph" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Create Graph</a>
+        </div>
+        
+      </div>
+      <!-- -->
+
+      <a href="/userProfile" class="bg-black text-white px-4 py-2 rounded hover:opacity-90">Profile</a>
     </nav>
   </header>
+
+
 
   <!-- Main Content -->
   <main class="max-w-2xl mx-auto px-4 py-12 text-center grow">
@@ -25,24 +46,30 @@
     <p class="text-gray-600 mb-8">This is your profile which has some information about your account.</p>
 
     <!-- Info Table -->
+
+
+    <form action="/userInfo" method="POST" class="mb-6">
     <div class="grid grid-cols-2 text-left border border-gray-200 rounded overflow-hidden mb-8">
+
       <div class="bg-purple-100 px-4 py-3 font-medium">Name:</div>
-      <div class="px-4 py-3">{{.name}}</div>
+      <input type="text" name="name" value="{{.name}}" />
+
       <div class="bg-purple-100 px-4 py-3 font-medium">Email:</div>
-      <div class="px-4 py-3">{{.email}}</div>
+      <input type="email" name="email" value="{{.email}}" />
+
       <div class="bg-purple-100 px-4 py-3 font-medium">Joined:</div>
       <div class="px-4 py-3">{{.since}}</div>
+
       <div class="bg-purple-100 px-4 py-3 font-medium">Workouts Logged:</div>
       <div class="px-4 py-3">100</div>
-    </div>
 
-    <!-- Edit Info Form -->
-    <form action="/userInfo" method="POST" class="space-y-4 text-left max-w-md mx-auto mb-6">
-      <input type="text" name="name" placeholder="Name" value="{{.name}}" class="w-full border px-4 py-2 rounded" />
-      <input type="number" name="age" placeholder="Age" value="{{.age}}" class="w-full border px-4 py-2 rounded" />
-      <input type="email" name="email" placeholder="Email" value="{{.email}}" class="w-full border px-4 py-2 rounded" />
+    </div>
+    <div class="text-center mt-4">
       <button type="submit" class="bg-black text-white px-6 py-2 rounded hover:opacity-90">Save Info</button>
-    </form>
+    </div>
+  </form>
+
+
 
     <!-- Log Out Button -->
     <form action="/logout" method="POST" class="text-center">

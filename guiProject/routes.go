@@ -158,7 +158,6 @@ func setRoutes(app *fiber.App) {
         username := getUser(c)
         name := c.FormValue("name")
         age := c.FormValue("age")
-        color := c.FormValue("color")
         email := c.FormValue("email")
 
         //set the data into the database or display error on console
@@ -170,12 +169,9 @@ func setRoutes(app *fiber.App) {
             fmt.Printf("adding age failed")
             panic(err)
         }
-        if err := SetUserData(username, "color", color); err != nil {
-            fmt.Printf("adding color failed")
-            panic(err)
-        }
+
         if err := SetUserData(username, "email", email); err != nil {
-            fmt.Printf("adding color failed")
+            fmt.Printf("adding email failed")
             panic(err)
         }
 
@@ -435,19 +431,75 @@ func setRoutes(app *fiber.App) {
 
     //features page
     app.Get("/features", func(c *fiber.Ctx) error {
-        return c.Render("features", nil)
+
+        username := getUser(c)
+        if username == "" {
+            return c.Render("features", fiber.Map{
+                "dash1": "/loginPage",
+                "dash2": "/signupPage",
+                "name1": "Log In",
+                "name2": "Sign Up",
+            })
+        }
+
+        return c.Render("features", fiber.Map{
+            "dash1": "/addWorkout",
+            "dash2": "/userProfile",
+            "name1": "My Log",
+            "name2": "Profile",
+            "loggedIn": "yes",
+        })
+
     })
 
     //timer page
     app.Get("/timer", func(c *fiber.Ctx) error {
-        return c.Render("timer", nil)
+        
+        username := getUser(c)
+        if username == "" {
+            return c.Render("timer", fiber.Map{
+                "dash1": "/loginPage",
+                "dash2": "/signupPage",
+                "name1": "Log In",
+                "name2": "Sign Up",
+            })
+        }
+
+        return c.Render("timer", fiber.Map{
+            "dash1": "/addWorkout",
+            "dash2": "/userProfile",
+            "name1": "My Log",
+            "name2": "Profile",
+            "loggedIn": "yes",
+        })
+
     })
 
     //reminders page
     app.Get("/reminders", func(c *fiber.Ctx) error {
-        return c.Render("reminders", nil)
+        username := getUser(c)
+        if username == "" {
+            return c.Render("reminders", fiber.Map{
+                "dash1": "/loginPage",
+                "dash2": "/signupPage",
+                "name1": "Log In",
+                "name2": "Sign Up",
+            })
+        }
+
+        return c.Render("reminders", fiber.Map{
+            "dash1": "/addWorkout",
+            "dash2": "/userProfile",
+            "name1": "My Log",
+            "name2": "Profile",
+            "loggedIn": "yes",
+        })
     })
 
+    //page
+    app.Get("/futureWorkouts", func(c *fiber.Ctx) error {
+        return c.Render("futureWorkouts", nil)
+    })    
 
     
 //=================[TEST AREA]===================

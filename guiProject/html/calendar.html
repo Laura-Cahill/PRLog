@@ -6,14 +6,33 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-white text-black font-sans min-h-screen flex flex-col">
-   <!-- Top Navbar -->
+  <!-- Navbar -->
   <header class="flex justify-between items-center px-6 py-4 border-b">
-    <h1 class="text-xl font-bold">PRLog</h1>
-    <nav class="space-x-4 hidden md:block">
+    <h1 class="text-lg font-bold">PRLog</h1>
+    <nav class="space-x-6 hidden md:flex items-center">
       <a href="/index" class="text-gray-700 hover:underline">Home</a>
       <a href="/features" class="text-gray-700 hover:underline">Features</a>
-      <a href="/addWorkout" class="text-black font-semibold underline">My Log</a>
-      <a href="/userProfile" class="text-gray-700 hover:underline">Profile</a>
+
+      <!-- dropdown-->
+      <div class="relative group">
+
+        <div class="flex flex-col">
+          <a href="/addWorkout" class="text-gray-700 hover:underline">My Log</a>
+
+
+          <div class="h-2 absolute top-full w-full"></div>
+        </div>
+
+        <div class="absolute hidden group-hover:block bg-white  w-48 z-10 border">
+          <a href="/addWorkout" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Add Workout</a>
+          <a href="/calendar" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Calendar</a>
+          <a href="/createGraph" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Create Graph</a>
+        </div>
+        
+      </div>
+      <!-- -->
+
+      <a href="/userProfile" class="bg-black text-white px-4 py-2 rounded hover:opacity-90">Profile</a>
     </nav>
   </header>
 
