@@ -205,6 +205,7 @@ func setRoutes(app *fiber.App) {
         
         //rerender page with new error if error happened
         if err != nil {
+            
             return c.Render("addWorkout", fiber.Map{
                 "AddError": err.Error(),
                 "Username": username,
@@ -212,7 +213,19 @@ func setRoutes(app *fiber.App) {
             })
         }
         
-        //rerender with success message
+        //rerender with success message and add one more workout logged
+
+        loggedValue, _ := GetUserData(username, "logged")
+        userLogged, _ := strconv.Atoi(loggedValue.(string))
+        userLogged++
+
+
+        fmt.Printf("logged value is %v and new value is %v", loggedValue, userLogged)
+
+        var logStr = strconv.Itoa(userLogged)
+
+        SetUserData(username, "logged", logStr)
+
         return c.Render("addWorkout", fiber.Map{
             "Username": username,
             "Date":     date,
@@ -387,18 +400,18 @@ func setRoutes(app *fiber.App) {
         //returns an err too, which we ignore using '_'
 		var userName, _ = GetUserData(username, "name")
 		var userAge, _ = GetUserData(username, "age")
-		var userColor, _ = GetUserData(username, "color")
         var userSince, _ = GetUserData(username, "since")
         var userEmail, _ = GetUserData(username, "email")
+        var userLogged, _ = GetUserData(username, "logged")
 
         //render using user data
 		return c.Render("userProfile", fiber.Map{
 			"username": username,
 			"name": userName,
 			"age": userAge,
-			"color": userColor,
             "since": userSince,
             "email": userEmail,
+            "logged": userLogged,
 		})
 
 	})
