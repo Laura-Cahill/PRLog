@@ -140,7 +140,7 @@ func setRoutes(app *fiber.App) {
 				}
 				
 				//redirect to profile
-				return c.Redirect("/userProfile")
+				return c.Redirect("/addWorkout")
 
 
 				//======================================================================
