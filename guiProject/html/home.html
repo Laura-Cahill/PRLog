@@ -2,87 +2,182 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>PRLog</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-white text-black font-sans">
-  <!-- Navbar -->
-  <header class="flex justify-between items-center px-6 py-4 border-b">
-    <h1 class="text-lg font-bold">PRLog</h1>
-    <nav class="space-x-6 hidden md:flex items-center">
-      <a href="/index" class="text-gray-700 hover:underline">Home</a>
-      <a href="/features" class="text-gray-700 hover:underline">Features</a>
+<body class="bg-white text-black font-sans antialiased">
+  <!-- Header -->
+  <header class="sticky top-0 z-20 bg-white/80 backdrop-blur border-b">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="h-16 flex items-center justify-between">
+        <a href="/index" class="text-xl font-extrabold tracking-tight">PRLog</a>
 
-      <!-- dropdown-->
-      <div class="relative group">
+        <!-- Desktop nav -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="/index" class="text-gray-700 hover:underline">Home</a>
+          <a href="/features" class="text-gray-700 hover:underline">Features</a>
 
-        <div class="flex flex-col">
-          <a href="/addWorkout" class="text-gray-700 hover:underline">My Log</a>
+          <!-- My Log w/ dropdown -->
+          <div class="relative group">
+            <button
+              type="button"
+              class="text-gray-700 hover:underline inline-flex items-center gap-1"
+              aria-haspopup="true"
+              aria-expanded="false"
+              data-dropdown-trigger
+            >
+              My Log
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5H7z"/></svg>
+            </button>
 
+            <div
+              class="absolute left-0 mt-2 w-48 rounded-md border bg-white shadow-lg hidden group-hover:block"
+              data-dropdown-menu
+            >
+              <a href="/addWorkout" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Add Workout</a>
+              <a href="/calendar" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">View Calendar</a>
+              <a href="/createGraph" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Create Graph</a>
+            </div>
+          </div>
 
-          <div class="h-2 absolute top-full w-full"></div>
-        </div>
+          <a href="/userProfile" class="bg-black text-white px-4 py-2 rounded-md hover:opacity-90">Profile</a>
+        </nav>
 
-        <div class="absolute hidden group-hover:block bg-white  w-48 z-10 border">
-          <a href="/addWorkout" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Add Workout</a>
-          <a href="/calendar" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Calendar</a>
-          <a href="/createGraph" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Create Graph</a>
-        </div>
-        
+        <!-- Mobile menu button -->
+        <button
+          type="button"
+          class="md:hidden inline-flex items-center justify-center p-2 rounded-md border"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+          id="mobile-menu-button"
+        >
+          <span class="sr-only">Open main menu</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v2H4zM4 11h16v2H4zM4 16h16v2H4z"/></svg>
+        </button>
       </div>
-      <!-- -->
+    </div>
 
-      <a href="/userProfile" class="bg-black text-white px-4 py-2 rounded hover:opacity-90">Profile</a>
+    <!-- Mobile menu -->
+    <nav id="mobile-menu" class="md:hidden hidden border-t">
+      <div class="px-4 py-3 space-y-2">
+        <a href="/index" class="block px-3 py-2 rounded hover:bg-gray-50">Home</a>
+        <a href="/features" class="block px-3 py-2 rounded hover:bg-gray-50">Features</a>
+
+        <!-- Collapsible My Log -->
+        <div class="border-t pt-2">
+          <button
+            type="button"
+            class="w-full flex items-center justify-between px-3 py-2 rounded hover:bg-gray-50"
+            aria-controls="mobile-log-submenu"
+            aria-expanded="false"
+            id="mobile-log-toggle"
+          >
+            <span>My Log</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5H7z"/></svg>
+          </button>
+          <div id="mobile-log-submenu" class="hidden pl-3">
+            <a href="/addWorkout" class="block px-3 py-2 rounded hover:bg-gray-50">Add Workout</a>
+            <a href="/calendar" class="block px-3 py-2 rounded hover:bg-gray-50">Calendar</a>
+            <a href="/createGraph" class="block px-3 py-2 rounded hover:bg-gray-50">Create Graph</a>
+          </div>
+        </div>
+
+        <a href="/userProfile" class="block bg-black text-white px-3 py-2 rounded hover:opacity-90">Profile</a>
+      </div>
     </nav>
   </header>
 
-    <!-- Hero -->
-    <section class="text-center py-16">
-      <h2 class="text-6xl font-bold text-purple-400 mb-4">PRLOG</h2>
-      <h3 class="text-3xl font-bold mb-4">Welcome to PRLog!</h3>
-      <p class="text-gray-600 mb-6 max-w-xl mx-auto">
-        Your personal workout tracker. Track your sets, reps, and weights – get visual feedback on your performance, and more!
+  <!-- Hero -->
+  <section class="text-center px-4 py-16 sm:py-20">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-5xl sm:text-6xl md:text-7xl font-extrabold text-purple-500 mb-4">PRLOG</h2>
+      <h3 class="text-2xl sm:text-3xl font-bold mb-4">Welcome to PRLog!</h3>
+      <p class="text-gray-600 mb-8 sm:mb-10 leading-relaxed">
+        Your personal workout tracker. Track your sets, reps, and weights — get visual feedback on your performance, and more!
       </p>
-      <a href="/signupPage" class="bg-black text-white px-6 py-2 rounded hover:opacity-90">Get started</a>
-    </section>
+      <a href="/signupPage" class="inline-block bg-black text-white px-6 py-3 rounded-md hover:opacity-90">Get started</a>
+    </div>
+  </section>
 
-    <!-- What PRLog can do -->
-    <section class="px-6 py-12 max-w-6xl mx-auto">
-      <h4 class="text-2xl font-bold mb-8">What PRLog can do for you:</h4>
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="text-center">
-          <img src="https://img.icons8.com/ios-filled/100/000000/note.png" class="mx-auto mb-4" />
+  <!-- Features -->
+  <section class="px-4 sm:px-6 lg:px-8 py-12">
+    <div class="max-w-7xl mx-auto">
+      <h4 class="text-xl sm:text-2xl font-bold mb-8">What PRLog can do for you:</h4>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="text-center rounded-2xl border p-6">
+          <img src="https://img.icons8.com/ios-filled/100/000000/note.png" alt="" class="mx-auto mb-4 h-16 w-16 object-contain" />
           <h5 class="font-semibold text-purple-700 mb-2">Log Workouts</h5>
-          <p class="text-gray-600 text-sm">
-            PRL is designed to make logging workouts easy. Simply add a workout, input your sets, reps, and weights lifted, then add it to your log. You can look back at and check out your past workouts.
+          <p class="text-gray-600 text-sm sm:text-base">
+            PRL makes logging easy. Add a workout, input sets, reps, and weights, then save it to your log and revisit past sessions.
           </p>
         </div>
-        <div class="text-center">
-          <img src="https://img.icons8.com/ios/100/000000/combo-chart.png" class="mx-auto mb-4" />
+        <div class="text-center rounded-2xl border p-6">
+          <img src="https://img.icons8.com/ios/100/000000/combo-chart.png" alt="" class="mx-auto mb-4 h-16 w-16 object-contain" />
           <h5 class="font-semibold text-purple-700 mb-2">Visual Graphs</h5>
-          <p class="text-gray-600 text-sm">
-            We take your notes and go one step further by creating graphs of your workouts over time so you can track your progress, identify any sticking points, and reach your fitness goals.
+          <p class="text-gray-600 text-sm sm:text-base">
+            Turn notes into progress charts to spot trends, break plateaus, and reach goals faster.
           </p>
         </div>
-        <div class="text-center">
-          <img src="https://img.icons8.com/ios/100/000000/stopwatch.png" class="mx-auto mb-4" />
-          <h5 class="font-semibold text-purple-700 mb-2">Timers and Reminders</h5>
-          <p class="text-gray-600 text-sm">
-            PRLog is your one stop shop for all of your workouts. Need a timer for your next circuit? We got you covered! How about a friendly reminder for your next workout? We can do that too.
+        <div class="text-center rounded-2xl border p-6">
+          <img src="https://img.icons8.com/ios/100/000000/stopwatch.png" alt="" class="mx-auto mb-4 h-16 w-16 object-contain" />
+          <h5 class="font-semibold text-purple-700 mb-2">Timers & Reminders</h5>
+          <p class="text-gray-600 text-sm sm:text-base">
+            Built-in timers for circuits and friendly nudges for your next workout, all in one place.
           </p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-     <!-- Footer -->
-    <footer class="border-t mt-16 px-6 py-4 text-sm text-gray-500 flex justify-between items-center">
-      <span>PRLog</span>
-      <div class="space-x-4">
+  <!-- Footer -->
+  <footer class="border-t mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 text-sm text-gray-500 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <span class="font-medium">PRLog</span>
+      <div class="flex gap-4">
         <a href="/index" class="hover:underline">Home</a>
         <a href="/features" class="hover:underline">Features</a>
         <a href="/signupPage" class="hover:underline">Sign Up</a>
       </div>
-    </footer>
-  </body>
+    </div>
+  </footer>
+
+  <script>
+    const mobileMenuBtn = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileLogToggle = document.getElementById('mobile-log-toggle');
+    const mobileLogSubmenu = document.getElementById('mobile-log-submenu');
+
+    function toggle(el) {
+      el.classList.toggle('hidden');
+    }
+
+    mobileMenuBtn?.addEventListener('click', () => {
+      const expanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
+      mobileMenuBtn.setAttribute('aria-expanded', String(!expanded));
+      toggle(mobileMenu);
+    });
+
+    mobileLogToggle?.addEventListener('click', () => {
+      const expanded = mobileLogToggle.getAttribute('aria-expanded') === 'true';
+      mobileLogToggle.setAttribute('aria-expanded', String(!expanded));
+      mobileLogToggle.querySelector('svg')?.classList.toggle('rotate-180');
+      toggle(mobileLogSubmenu);
+    });
+
+    // Enable click-to-open for desktop dropdown (also works on touch)
+    const dropdownTrigger = document.querySelector('[data-dropdown-trigger]');
+    const dropdownMenu = document.querySelector('[data-dropdown-menu]');
+    dropdownTrigger?.addEventListener('click', (e) => {
+      e.preventDefault();
+      dropdownMenu?.classList.toggle('hidden');
+    });
+    document.addEventListener('click', (e) => {
+      if (!dropdownMenu || !dropdownTrigger) return;
+      if (!dropdownMenu.contains(e.target) && !dropdownTrigger.contains(e.target)) {
+        dropdownMenu.classList.add('hidden');
+      }
+    });
+  </script>
+</body>
 </html>
