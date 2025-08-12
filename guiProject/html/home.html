@@ -100,31 +100,41 @@
     </div>
   </section>
 
-  <!-- Features -->
+  <!-- Features (now with buttons) -->
   <section class="px-4 sm:px-6 lg:px-8 py-12">
     <div class="max-w-7xl mx-auto">
-      <h4 class="text-xl sm:text-2xl font-bold mb-8">What PRLog can do for you:</h4>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div class="text-center rounded-2xl border p-6">
           <img src="https://img.icons8.com/ios-filled/100/000000/note.png" alt="" class="mx-auto mb-4 h-16 w-16 object-contain" />
           <h5 class="font-semibold text-purple-700 mb-2">Log Workouts</h5>
-          <p class="text-gray-600 text-sm sm:text-base">
+          <p class="text-gray-600 text-sm sm:text-base mb-4">
             PRL makes logging easy. Add a workout, input sets, reps, and weights, then save it to your log and revisit past sessions.
           </p>
+          <a href="/addWorkout" class="inline-flex items-center justify-center bg-black text-white px-4 py-2 rounded-md hover:opacity-90">
+            Add Workout
+          </a>
         </div>
+
         <div class="text-center rounded-2xl border p-6">
           <img src="https://img.icons8.com/ios/100/000000/combo-chart.png" alt="" class="mx-auto mb-4 h-16 w-16 object-contain" />
           <h5 class="font-semibold text-purple-700 mb-2">Visual Graphs</h5>
-          <p class="text-gray-600 text-sm sm:text-base">
+          <p class="text-gray-600 text-sm sm:text-base mb-4">
             Turn notes into progress charts to spot trends, break plateaus, and reach goals faster.
           </p>
+          <a href="/createGraph" class="inline-flex items-center justify-center bg-black text-white px-4 py-2 rounded-md hover:opacity-90">
+            Create Graph
+          </a>
         </div>
+
         <div class="text-center rounded-2xl border p-6">
           <img src="https://img.icons8.com/ios/100/000000/stopwatch.png" alt="" class="mx-auto mb-4 h-16 w-16 object-contain" />
-          <h5 class="font-semibold text-purple-700 mb-2">Timers & Reminders</h5>
-          <p class="text-gray-600 text-sm sm:text-base">
+          <h5 class="font-semibold text-purple-700 mb-2">Timers &amp; Reminders</h5>
+          <p class="text-gray-600 text-sm sm:text-base mb-4">
             Built-in timers for circuits and friendly nudges for your next workout, all in one place.
           </p>
+          <a href="/features#reminders" class="inline-flex items-center justify-center bg-black text-white px-4 py-2 rounded-md hover:opacity-90">
+            See Reminders
+          </a>
         </div>
       </div>
     </div>
@@ -148,9 +158,7 @@
     const mobileLogToggle = document.getElementById('mobile-log-toggle');
     const mobileLogSubmenu = document.getElementById('mobile-log-submenu');
 
-    function toggle(el) {
-      el.classList.toggle('hidden');
-    }
+    function toggle(el) { el.classList.toggle('hidden'); }
 
     mobileMenuBtn?.addEventListener('click', () => {
       const expanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
@@ -165,7 +173,6 @@
       toggle(mobileLogSubmenu);
     });
 
-    // Enable click-to-open for desktop dropdown (also works on touch)
     const dropdownTrigger = document.querySelector('[data-dropdown-trigger]');
     const dropdownMenu = document.querySelector('[data-dropdown-menu]');
     dropdownTrigger?.addEventListener('click', (e) => {
