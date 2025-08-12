@@ -1,68 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>PRLog Home</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body class="bg-white text-black font-sans">
-    <!-- Header -->
-    <header class="flex justify-between items-center px-6 py-4">
-      <h1 class="text-xl font-bold">PRLog</h1>
-      <nav class="space-x-6 hidden md:block">
-        <a href="/index" class="text-gray-700 hover:underline">Home</a>
-        <a href="/features" class="text-gray-700 hover:underline">Features</a>
-        <a href="/loginPage" class="text-gray-700 hover:underline">Log in</a>
-        <a href="/signupPage" class="bg-black text-white px-4 py-2 rounded hover:opacity-90">Sign Up</a>
-      </nav>
-    </header>
+<head>
+  <meta charset="UTF-8" />
+  <title>PRLog Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white text-black font-sans antialiased">
+  <header class="sticky top-0 z-20 bg-white/80 backdrop-blur border-b">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="h-16 flex items-center justify-between">
+        <a href="/index" class="text-xl font-extrabold tracking-tight">PRLog</a>
 
-    <!-- Hero -->
-    <section class="text-center py-16">
-      <h2 class="text-6xl font-bold text-purple-400 mb-4">PRLOG</h2>
-      <h3 class="text-3xl font-bold mb-4">Welcome to PRLog!</h3>
-      <p class="text-gray-600 mb-6 max-w-xl mx-auto">
-        Your personal workout tracker. Track your sets, reps, and weights – get visual feedback on your performance, and more!
-      </p>
-      <a href="/signupPage" class="bg-black text-white px-6 py-2 rounded hover:opacity-90">Get started</a>
-    </section>
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="/index" class="text-gray-700 hover:underline">Home</a>
+          <a href="/features" class="text-gray-700 hover:underline">Features</a>
+          <a href="/loginPage" class="text-gray-700 hover:underline">Log in</a>
+          <a href="/signupPage" class="bg-black text-white px-4 py-2 rounded-md hover:opacity-90">Sign Up</a>
+        </nav>
 
-    <!-- What PRLog can do -->
-    <section class="px-6 py-12 max-w-6xl mx-auto">
-      <h4 class="text-2xl font-bold mb-8">What PRLog can do for you:</h4>
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="text-center">
-          <img src="https://img.icons8.com/ios-filled/100/000000/note.png" class="mx-auto mb-4" />
-          <h5 class="font-semibold text-purple-700 mb-2">Log Workouts</h5>
-          <p class="text-gray-600 text-sm">
-            PRL is designed to make logging workouts easy. Simply add a workout, input your sets, reps, and weights lifted, then add it to your log. You can look back at and check out your past workouts.
-          </p>
-        </div>
-        <div class="text-center">
-          <img src="https://img.icons8.com/ios/100/000000/combo-chart.png" class="mx-auto mb-4" />
-          <h5 class="font-semibold text-purple-700 mb-2">Visual Graphs</h5>
-          <p class="text-gray-600 text-sm">
-            We take your notes and go one step further by creating graphs of your workouts over time so you can track your progress, identify any sticking points, and reach your fitness goals.
-          </p>
-        </div>
-        <div class="text-center">
-          <img src="https://img.icons8.com/ios/100/000000/stopwatch.png" class="mx-auto mb-4" />
-          <h5 class="font-semibold text-purple-700 mb-2">Timers and Reminders</h5>
-          <p class="text-gray-600 text-sm">
-            PRLog is your one stop shop for all of your workouts. Need a timer for your next circuit? We got you covered! How about a friendly reminder for your next workout? We can do that too.
-          </p>
-        </div>
+        <button
+          type="button"
+          class="md:hidden inline-flex items-center justify-center p-2 rounded-md border"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+          id="mobile_menu_button"
+        >
+          <span class="sr-only">Open main menu</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v2H4zM4 11h16v2H4zM4 16h16v2H4z"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <nav id="mobile-menu" class="md:hidden hidden border-t">
+      <div class="px-4 py-3 space-y-2">
+        <a href="/index" class="block px-3 py-2 rounded hover:bg-gray-50">Home</a>
+        <a href="/features" class="block px-3 py-2 rounded hover:bg-gray-50">Features</a>
+        <a href="/loginPage" class="block px-3 py-2 rounded hover:bg-gray-50">Log in</a>
+        <a href="/signupPage" class="block bg-black text-white px-3 py-2 rounded hover:opacity-90">Sign Up</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="text-center px-4 py-16 sm:py-20">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-5xl sm:text-6xl md:text-7xl font-extrabold text-purple-500 mb-4">PRLOG</h2>
+        <h3 class="text-2xl sm:text-3xl font-bold mb-4">Welcome to PRLog!</h3>
+        <p class="text-gray-600 mb-8 sm:mb-10 leading-relaxed">
+          Your personal workout tracker. Track your sets, reps, and weights — get visual feedback on your performance, and more!
+        </p>
+        <a href="/signupPage" class="inline-block bg-black text-white px-6 py-3 rounded-md hover:opacity-90">Get started</a>
       </div>
     </section>
 
-     <!-- Footer -->
-    <footer class="border-t mt-16 px-6 py-4 text-sm text-gray-500 flex justify-between items-center">
-      <span>PRLog</span>
-      <div class="space-x-4">
+    <section class="px-4 sm:px-6 lg:px-8 py-12">
+      <div class="max-w-7xl mx-auto">
+        <h4 class="text-xl sm:text-2xl font-bold mb-8">What PRLog can do for you:</h4>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="text-center rounded-2xl border p-6">
+            <img src="https://img.icons8.com/ios-filled/100/000000/note.png" alt="" class="mx-auto mb-4 h-16 w-16 object-contain" />
+            <h5 class="font-semibold text-purple-700 mb-2">Log Workouts</h5>
+            <p class="text-gray-600 text-sm sm:text-base">
+              Add workouts, input sets, reps, and weights, then revisit past sessions.
+            </p>
+          </div>
+          <div class="text-center rounded-2xl border p-6">
+            <img src="https://img.icons8.com/ios/100/000000/combo-chart.png" alt="" class="mx-auto mb-4 h-16 w-16 object-contain" />
+            <h5 class="font-semibold text-purple-700 mb-2">Visual Graphs</h5>
+            <p class="text-gray-600 text-sm sm:text-base">
+              Turn notes into progress charts to track trends and smash plateaus.
+            </p>
+          </div>
+          <div class="text-center rounded-2xl border p-6">
+            <img src="https://img.icons8.com/ios/100/000000/stopwatch.png" alt="" class="mx-auto mb-4 h-16 w-16 object-contain" />
+            <h5 class="font-semibold text-purple-700 mb-2">Timers & Reminders</h5>
+            <p class="text-gray-600 text-sm sm:text-base">
+              Built-in timers and nudges so workouts stay on schedule.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 text-sm text-gray-500 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <span class="font-medium">PRLog</span>
+      <div class="flex gap-4">
         <a href="/index" class="hover:underline">Home</a>
         <a href="/features" class="hover:underline">Features</a>
         <a href="/signupPage" class="hover:underline">Sign Up</a>
       </div>
-    </footer>
-  </body>
+    </div>
+  </footer>
+
+  <script>
+    const mobile_menu_button = document.getElementById('mobile_menu_button');
+    const mobile_menu = document.getElementById('mobile-menu');
+
+    function toggle_hidden(el) { el.classList.toggle('hidden'); }
+
+    mobile_menu_button?.addEventListener('click', () => {
+      const expanded = mobile_menu_button.getAttribute('aria-expanded') === 'true';
+      mobile_menu_button.setAttribute('aria-expanded', String(!expanded));
+      toggle_hidden(mobile_menu);
+    });
+  </script>
+</body>
 </html>
