@@ -2,93 +2,186 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Future Workouts | PRLog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-white text-black font-sans">
+<body class="bg-white text-black font-sans antialiased">
 
-  <!-- Navbar -->
-  <header class="flex justify-between items-center px-6 py-4">
-    <div class="text-lg font-semibold">PRLog</div>
-    <nav class="flex items-center space-x-6">
-      <a href="/index" class="hover:underline">Home</a>
-      <a href="/features" class="hover:underline">Features</a>
-      <a href="#" class="hover:underline">My Log</a>
-      <a href="#" class="bg-black text-white px-4 py-2 rounded hover:opacity-90">User's Profile</a>
+  <!-- Header -->
+  <header class="sticky top-0 z-20 bg-white/80 backdrop-blur border-b">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="h-16 flex items-center justify-between">
+        <a href="/index" class="text-xl font-extrabold tracking-tight">PRLog</a>
+
+        <!-- Desktop nav -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="/index" class="hover:underline">Home</a>
+          <a href="/features" class="hover:underline">Features</a>
+
+          <div class="relative group">
+            <button
+              type="button"
+              class="inline-flex items-center gap-1 hover:underline"
+              aria-haspopup="true"
+              aria-expanded="false"
+              data-dropdown-trigger
+            >
+              My Log
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5H7z"/></svg>
+            </button>
+            <div
+              class="absolute left-0 mt-2 w-48 rounded-md border bg-white shadow-lg hidden group-hover:block"
+              data-dropdown-menu
+            >
+              <a href="/addWorkout" class="block px-4 py-2 hover:bg-gray-100">Add Workout</a>
+              <a href="/calendar" class="block px-4 py-2 hover:bg-gray-100">Calendar</a>
+              <a href="/createGraph" class="block px-4 py-2 hover:bg-gray-100">Create Graph</a>
+            </div>
+          </div>
+
+          <a href="/userProfile" class="bg-black text-white px-4 py-2 rounded-md hover:opacity-90">Profile</a>
+        </nav>
+
+        <!-- Mobile button -->
+        <button
+          type="button"
+          class="md:hidden inline-flex items-center justify-center p-2 rounded-md border"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+          id="mobile_menu_button"
+        >
+          <span class="sr-only">Open main menu</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v2H4zM4 11h16v2H4zM4 16h16v2H4z"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <nav id="mobile-menu" class="md:hidden hidden border-t">
+      <div class="px-4 py-3 space-y-2">
+        <a href="/index" class="block px-3 py-2 rounded hover:bg-gray-50">Home</a>
+        <a href="/features" class="block px-3 py-2 rounded hover:bg-gray-50">Features</a>
+
+        <div class="border-t pt-2">
+          <button
+            type="button"
+            class="w-full flex items-center justify-between px-3 py-2 rounded hover:bg-gray-50"
+            aria-controls="mobile_log_submenu"
+            aria-expanded="false"
+            id="mobile_log_toggle"
+          >
+            <span>My Log</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5H7z"/></svg>
+          </button>
+          <div id="mobile_log_submenu" class="hidden pl-3">
+            <a href="/addWorkout" class="block px-3 py-2 rounded hover:bg-gray-50">Add Workout</a>
+            <a href="/calendar" class="block px-3 py-2 rounded hover:bg-gray-50">Calendar</a>
+            <a href="/createGraph" class="block px-3 py-2 rounded hover:bg-gray-50">Create Graph</a>
+          </div>
+        </div>
+
+        <a href="/userProfile" class="block bg-black text-white px-3 py-2 rounded hover:opacity-90">Profile</a>
+      </div>
     </nav>
   </header>
 
-  <!-- Main Section -->
-  <main class="flex flex-col items-center justify-center text-center px-4 py-24">
-    <h1 class="text-4xl font-bold text-purple-400 mb-6">Future Workouts</h1>
-    <p class="text-gray-600 mb-12 max-w-lg">
-      Select a date and plan your workout ahead of time.
-    </p>
+  <!-- Main -->
+  <main class="px-4 sm:px-6 lg:px-8 py-16">
+    <section class="max-w-3xl mx-auto text-center">
+      <h1 class="text-4xl sm:text-5xl font-bold text-purple-500 mb-4">Future Workouts</h1>
+      <p class="text-gray-600 mb-10 max-w-xl mx-auto">Select a date and plan your workout ahead of time.</p>
+    </section>
 
-    <!-- Form -->
-    <form class="w-full max-w-md mx-auto space-y-6 text-left" id="futureWorkoutsForm">
+    <section class="max-w-2xl mx-auto">
+      <form class="space-y-6 border rounded-2xl p-6" id="futureWorkoutsForm">
+        <div>
+          <label for="workoutDate" class="block mb-1 font-medium">Workout Date</label>
+          <input type="date" id="workoutDate" class="w-full border px-3 py-2 rounded" />
+        </div>
 
-      <!-- Date Picker -->
-      <div>
-        <label for="workoutDate" class="block mb-1 font-medium">Workout Date:</label>
-        <input type="date" id="workoutDate" class="w-full border px-3 py-2 rounded" />
-      </div>
+        <div>
+          <label for="exercise" class="block mb-1 font-medium">Exercise</label>
+          <input type="text" id="exercise" placeholder="e.g. Bench Press" class="w-full border px-3 py-2 rounded" />
+        </div>
 
-      <!-- Exercise -->
-      <div>
-        <label for="exercise" class="block mb-1 font-medium">Exercise:</label>
-        <input type="text" id="exercise" placeholder="e.g. Bench Press" class="w-full border px-3 py-2 rounded" />
-      </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label for="sets" class="block mb-1 font-medium">Sets</label>
+            <input type="number" id="sets" min="1" class="w-full border px-3 py-2 rounded" />
+          </div>
+          <div>
+            <label for="reps" class="block mb-1 font-medium">Reps</label>
+            <input type="number" id="reps" min="1" class="w-full border px-3 py-2 rounded" />
+          </div>
+          <div>
+            <label for="weight" class="block mb-1 font-medium">Weight (lbs)</label>
+            <input type="number" id="weight" step="0.5" class="w-full border px-3 py-2 rounded" />
+          </div>
+        </div>
 
-      <!-- Sets -->
-      <div>
-        <label for="sets" class="block mb-1 font-medium">Sets:</label>
-        <input type="number" id="sets" min="1" class="w-full border px-3 py-2 rounded" />
-      </div>
+        <div>
+          <label for="notes" class="block mb-1 font-medium">Notes (Optional)</label>
+          <textarea id="notes" rows="3" class="w-full border px-3 py-2 rounded"></textarea>
+        </div>
 
-      <!-- Reps -->
-      <div>
-        <label for="reps" class="block mb-1 font-medium">Reps:</label>
-        <input type="number" id="reps" min="1" class="w-full border px-3 py-2 rounded" />
-      </div>
-
-      <!-- Weight -->
-      <div>
-        <label for="weight" class="block mb-1 font-medium">Weight (lbs):</label>
-        <input type="number" id="weight" step="0.5" class="w-full border px-3 py-2 rounded" />
-      </div>
-
-      <!-- Notes -->
-      <div>
-        <label for="notes" class="block mb-1 font-medium">Notes (Optional):</label>
-        <textarea id="notes" rows="3" class="w-full border px-3 py-2 rounded"></textarea>
-      </div>
-
-      <!-- Save Button -->
-      <div class="flex flex-col items-center mt-4">
-        <button type="submit" class="bg-purple-400 text-white px-6 py-2 rounded hover:bg-purple-500 active:bg-purple-600 active:scale-95 transition transform duration-75">
-          Save Workout
-        </button>
-        
-        <p id="confirmationMessage" class="text-black text-center font-semibold mt-4 hidden">
-            Workout saved!
-        </p>
-      </div>
-
-    </form>
+        <div class="flex flex-col items-center mt-2">
+          <button type="submit" class="bg-purple-500 text-white px-6 py-2 rounded hover:bg-purple-600 active:bg-purple-700 active:scale-95 transition">
+            Save Workout
+          </button>
+          <p id="confirmationMessage" class="text-black font-semibold mt-4 hidden">Workout saved!</p>
+        </div>
+      </form>
+    </section>
   </main>
 
   <!-- Footer -->
-  <footer class="border-t mt-16 px-6 py-4 text-sm text-gray-500 flex justify-between items-center">
-    <span>PRLog</span>
-    <div class="space-x-4">
-      <a href="/index" class="hover:underline">Home</a>
-      <a href="/features" class="hover:underline">Features</a>
-      <a href="/signupPage" class="hover:underline">Sign Up</a>
+  <footer class="border-t mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 text-sm text-gray-500 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <span class="font-medium">PRLog</span>
+      <div class="flex gap-4">
+        <a href="/index" class="hover:underline">Home</a>
+        <a href="/features" class="hover:underline">Features</a>
+        <a href="/signupPage" class="hover:underline">Sign Up</a>
+      </div>
     </div>
   </footer>
 
   <script src="/js/futureWorkouts.js"></script>
+  <script>
+    const mobile_menu_btn = document.getElementById('mobile_menu_button');
+    const mobile_menu = document.getElementById('mobile-menu');
+    const mobile_log_toggle = document.getElementById('mobile_log_toggle');
+    const mobile_log_submenu = document.getElementById('mobile_log_submenu');
+
+    const dropdown_trigger = document.querySelector('[data-dropdown-trigger]');
+    const dropdown_menu = document.querySelector('[data-dropdown-menu]');
+
+    function toggleHidden(el){ el.classList.toggle('hidden'); }
+
+    mobile_menu_btn?.addEventListener('click', () => {
+      const expanded = mobile_menu_btn.getAttribute('aria-expanded') === 'true';
+      mobile_menu_btn.setAttribute('aria-expanded', String(!expanded));
+      toggleHidden(mobile_menu);
+    });
+
+    mobile_log_toggle?.addEventListener('click', () => {
+      const expanded = mobile_log_toggle.getAttribute('aria-expanded') === 'true';
+      mobile_log_toggle.setAttribute('aria-expanded', String(!expanded));
+      mobile_log_toggle.querySelector('svg')?.classList.toggle('rotate-180');
+      toggleHidden(mobile_log_submenu);
+    });
+
+    dropdown_trigger?.addEventListener('click', (e) => {
+      e.preventDefault();
+      dropdown_menu?.classList.toggle('hidden');
+    });
+    document.addEventListener('click', (e) => {
+      if (!dropdown_menu || !dropdown_trigger) return;
+      if (!dropdown_menu.contains(e.target) && !dropdown_trigger.contains(e.target)) {
+        dropdown_menu.classList.add('hidden');
+      }
+    });
+  </script>
 </body>
 </html>

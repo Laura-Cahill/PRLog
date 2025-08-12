@@ -2,116 +2,213 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Features | PRLog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-white text-black font-sans">
-  <!-- Navbar -->
-  <header class="flex justify-between items-center px-6 py-4 border-b">
-    <h1 class="text-lg font-bold">PRLog</h1>
-    <nav class="space-x-6 hidden md:flex items-center">
-      <a href="/index" class="text-gray-700 hover:underline">Home</a>
-      <a href="/features" class="text-gray-700 hover:underline">Features</a>
+<body class="bg-white text-black font-sans antialiased">
+  <!-- Header -->
+  <header class="sticky top-0 z-20 bg-white/80 backdrop-blur border-b">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="h-16 flex items-center justify-between">
+        <a href="/index" class="text-xl font-extrabold tracking-tight">PRLog</a>
 
-      <!-- dropdown-->
-      <div class="relative group">
+        <!-- Desktop nav -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="/index" class="text-gray-700 hover:underline">Home</a>
+          <a href="/features" class="text-gray-700 hover:underline">Features</a>
 
-        <div class="flex flex-col">
-          <a href="{{.dash1}}" class="text-gray-700 hover:underline">{{.name1}}</a>
+          <!-- My Log / Dashboard -->
+          <div class="relative group">
+            <button
+              type="button"
+              class="text-gray-700 hover:underline inline-flex items-center gap-1"
+              aria-haspopup="true"
+              aria-expanded="false"
+              data-dropdown-trigger
+            >
+              {{.name1}}
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5H7z"/></svg>
+            </button>
 
+            {{ if .loggedIn }}
+            <div
+              class="absolute left-0 mt-2 w-48 rounded-md border bg-white shadow-lg hidden group-hover:block"
+              data-dropdown-menu
+            >
+              <a href="/addWorkout" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Add Workout</a>
+              <a href="/calendar" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Calendar</a>
+              <a href="/createGraph" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Create Graph</a>
+            </div>
+            {{ else }}
+            <div
+              class="absolute left-0 mt-2 w-48 rounded-md border bg-white shadow-lg hidden group-hover:block"
+              data-dropdown-menu
+            >
+              <a href="{{.dash1}}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">{{.name1}}</a>
+              <a href="/loginPage" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Log in</a>
+              <a href="/signupPage" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Sign Up</a>
+            </div>
+            {{ end }}
+          </div>
 
-          <div class="h-2 absolute top-full w-full"></div>
-        </div>
+          <a href="{{.dash2}}" class="bg-black text-white px-4 py-2 rounded-md hover:opacity-90">{{.name2}}</a>
+        </nav>
 
-        {{ if .loggedIn }}
-        <div class="absolute hidden group-hover:block bg-white  w-48 z-10 border">
-          <a href="/addWorkout" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Add Workout</a>
-          <a href="/calendar" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Calendar</a>
-          <a href="/createGraph" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Create Graph</a>
-        </div>
-        {{ end }}
-        
+        <!-- Mobile menu button -->
+        <button
+          type="button"
+          class="md:hidden inline-flex items-center justify-center p-2 rounded-md border"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+          id="mobile_menu_button"
+        >
+          <span class="sr-only">Open main menu</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v2H4zM4 11h16v2H4zM4 16h16v2H4z"/></svg>
+        </button>
       </div>
-      <!-- -->
+    </div>
 
-      <a href="{{.dash2}}" class="bg-black text-white px-4 py-2 rounded hover:opacity-90">{{.name2}}</a> <!--sign up or profile-->
+    <!-- Mobile menu -->
+    <nav id="mobile-menu" class="md:hidden hidden border-t">
+      <div class="px-4 py-3 space-y-2">
+        <a href="/index" class="block px-3 py-2 rounded hover:bg-gray-50">Home</a>
+        <a href="/features" class="block px-3 py-2 rounded hover:bg-gray-50">Features</a>
 
+        <div class="border-t pt-2">
+          <button
+            type="button"
+            class="w-full flex items-center justify-between px-3 py-2 rounded hover:bg-gray-50"
+            aria-controls="mobile_log_submenu"
+            aria-expanded="false"
+            id="mobile_log_toggle"
+          >
+            <span>{{.name1}}</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5H7z"/></svg>
+          </button>
+
+          <div id="mobile_log_submenu" class="hidden pl-3">
+            {{ if .loggedIn }}
+              <a href="/addWorkout" class="block px-3 py-2 rounded hover:bg-gray-50">Add Workout</a>
+              <a href="/calendar" class="block px-3 py-2 rounded hover:bg-gray-50">Calendar</a>
+              <a href="/createGraph" class="block px-3 py-2 rounded hover:bg-gray-50">Create Graph</a>
+            {{ else }}
+              <a href="{{.dash1}}" class="block px-3 py-2 rounded hover:bg-gray-50">{{.name1}}</a>
+              <a href="/loginPage" class="block px-3 py-2 rounded hover:bg-gray-50">Log in</a>
+              <a href="/signupPage" class="block px-3 py-2 rounded hover:bg-gray-50">Sign Up</a>
+            {{ end }}
+          </div>
+        </div>
+
+        <a href="{{.dash2}}" class="block bg-black text-white px-3 py-2 rounded hover:opacity-90">{{.name2}}</a>
+      </div>
     </nav>
   </header>
 
+  <!-- Main -->
+  <main class="px-4 sm:px-6 lg:px-8 py-16">
+    <section class="max-w-3xl mx-auto text-center mb-16">
+      <h1 class="text-4xl sm:text-5xl font-bold mb-4 text-purple-500">Features</h1>
+      <p class="text-gray-600">
+        All the extras to help you get the most out of your training.
+      </p>
+    </section>
 
+    <!-- Timer -->
+    <section class="max-w-6xl mx-auto mb-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div class="order-2 md:order-1">
+          <h2 class="text-2xl sm:text-3xl font-semibold text-purple-500 mb-2">Timer</h2>
+          <p class="text-gray-600 mb-4">
+            Keep time on exercises and rest periods without leaving PRLog.
+          </p>
+          <a href="/timer" class="inline-flex bg-black text-white px-4 py-2 rounded hover:opacity-90">Launch Timer</a>
+        </div>
+        <div class="order-1 md:order-2 flex justify-center">
+          <img src="/images/stopwatch.png" alt="Timer" class="w-40 h-40 sm:w-48 sm:h-48 object-contain" />
+        </div>
+      </div>
+    </section>
 
-  <!-- Main Content -->
-  <main class="flex flex-col items-center justify-center text-center px-4 py-24">
-    <h1 class="text-5xl font-bold mb-4 text-purple-400">Features:</h1>
-    <p class="text-gray-600 max-w-xl text-center mb-16">
-      Here you can find all of our additional features to help you get the most out of your workouts.
-    </p>
+    <!-- Reminder (reversed on desktop) -->
+    <section class="max-w-6xl mx-auto mb-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div class="md:order-2">
+          <h2 class="text-2xl sm:text-3xl font-semibold text-purple-500 mb-2">Reminder</h2>
+          <p class="text-gray-600 mb-4">
+            Set reminders so you never miss the day’s workout.
+          </p>
+          <a href="/reminders" class="inline-flex bg-black text-white px-4 py-2 rounded hover:opacity-90">Create Reminder</a>
+        </div>
+        <div class="md:order-1 flex justify-center">
+          <img src="/images/bell.png" alt="Reminder" class="w-40 h-40 sm:w-48 sm:h-48 object-contain" />
+        </div>
+      </div>
+    </section>
 
-    <!-- Timer Feature -->
-    <div class="flex flex-col md:flex-row items-center justify-between mb-16 max-w-6xl w-full px-4">
-      <!-- Text -->
-      <div class="md:w-1/2 mb-8 md:mb-0">
-        <h2 class="text-3xl font-semibold text-purple-400 mb-2">Timer</h2>
-        <p class="text-gray-600 mb-4">
-          A timer to help keep track of your time during an exercise, or how long to rest between sets.
-        </p>
-        <a href="/timer" class="bg-black text-white px-4 py-2 rounded hover:opacity-90">
-          Launch Timer
-        </a>
+    <!-- Future Workout Planner -->
+    <section class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-semibold text-purple-500 mb-2">Future Workout Planner</h2>
+          <p class="text-gray-600 mb-4">
+            Plan and save upcoming sessions to stay on schedule.
+          </p>
+          <a href="/futureWorkouts" class="inline-flex bg-black text-white px-4 py-2 rounded hover:opacity-90">Start Planning</a>
+        </div>
+        <div class="flex justify-center">
+          <img src="/images/calendar.png" alt="Future workout planner" class="w-40 h-40 sm:w-48 sm:h-48 object-contain" />
+        </div>
       </div>
-      <!-- Image -->
-      <div class="md:w-1/2 flex justify-center">
-        <img src="/images/stopwatch.png" alt="Timer Icon" class="w-48 h-48">
-      </div>
-    </div>
-       
-    <!-- Reminder Feature (reversed) -->
-    <div class="flex flex-col md:flex-row-reverse items-center justify-between mb-16 max-w-6xl w-full px-4">
-      <!-- Text -->
-      <div class="md:w-1/2 mb-8 md:mb-0">
-        <h2 class="text-3xl font-semibold text-purple-400 mb-2">Reminder</h2>
-        <p class="text-gray-600 mb-4">
-          Set a reminder so you can keep track of which workout you're doing on a given day.
-        </p>
-        <a href="/reminders" class="bg-black text-white px-4 py-2 rounded hover:opacity-90">
-          Create Reminder
-        </a>
-      </div>
-      <!-- Image -->
-      <div class="md:w-1/2 flex justify-center">
-        <img src="/images/bell.png" alt="Reminder Icon" class="w-48 h-48">
-      </div>
-    </div>
-
-    <!-- Future Workout Planner Feature -->
-    <div class="flex flex-col md:flex-row items-center justify-between mb-16 max-w-6xl w-full px-4">
-      <!-- Text -->
-      <div class="md:w-1/2 mb-8 md:mb-0">
-        <h2 class="text-3xl font-semibold text-purple-400 mb-2">Future Workout Planner</h2>
-        <p class="text-gray-600 mb-4">
-          Plan and save your future workouts in advance. Keep track of your training schedule.
-        </p>
-        <a href="/futureWorkouts" class="bg-black text-white px-4 py-2 rounded hover:opacity-90">
-          Start Planning
-        </a>
-      </div>
-      <!-- Image -->
-      <div class="md:w-1/2 flex justify-center">
-        <img src="/images/calendar.png" alt="Future Workout Icon" class="w-48 h-48">
-      </div>
-    </div>
-
+    </section>
   </main>
-    <!-- Footer -->
-    <footer class="border-t mt-16 px-6 py-4 text-sm text-gray-500 flex justify-between items-center">
-      <span>PRLog</span>
-      <div class="space-x-4">
+
+  <!-- Footer -->
+  <footer class="border-t mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 text-sm text-gray-500 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <span class="font-medium">PRLog</span>
+      <div class="flex gap-4">
         <a href="/index" class="hover:underline">Home</a>
         <a href="/features" class="hover:underline">Features</a>
         <a href="/signupPage" class="hover:underline">Sign Up</a>
       </div>
-    </footer>
+    </div>
+  </footer>
+
+  <script>
+    const mobile_menu_btn = document.getElementById('mobile_menu_button');
+    const mobile_menu = document.getElementById('mobile-menu');
+    const mobile_log_toggle = document.getElementById('mobile_log_toggle');
+    const mobile_log_submenu = document.getElementById('mobile_log_submenu');
+
+    const dropdown_trigger = document.querySelector('[data-dropdown-trigger]');
+    const dropdown_menu = document.querySelector('[data-dropdown-menu]');
+
+    function toggleHidden(el){ el.classList.toggle('hidden'); }
+
+    mobile_menu_btn?.addEventListener('click', () => {
+      const expanded = mobile_menu_btn.getAttribute('aria-expanded') === 'true';
+      mobile_menu_btn.setAttribute('aria-expanded', String(!expanded));
+      toggleHidden(mobile_menu);
+    });
+
+    mobile_log_toggle?.addEventListener('click', () => {
+      const expanded = mobile_log_toggle.getAttribute('aria-expanded') === 'true';
+      mobile_log_toggle.setAttribute('aria-expanded', String(!expanded));
+      mobile_log_toggle.querySelector('svg')?.classList.toggle('rotate-180');
+      toggleHidden(mobile_log_submenu);
+    });
+
+    dropdown_trigger?.addEventListener('click', (e) => {
+      e.preventDefault();
+      dropdown_menu?.classList.toggle('hidden');
+    });
+    document.addEventListener('click', (e) => {
+      if (!dropdown_menu || !dropdown_trigger) return;
+      if (!dropdown_menu.contains(e.target) && !dropdown_trigger.contains(e.target)) {
+        dropdown_menu.classList.add('hidden');
+      }
+    });
+  </script>
 </body>
 </html>

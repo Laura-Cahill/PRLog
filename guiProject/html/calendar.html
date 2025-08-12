@@ -109,19 +109,35 @@
       </form>
 
       {{ if .Workout }}
+        {{ $thedate := .Workout.date }}
         <section class="mt-2 border-t pt-4">
-          <h3 class="text-xl font-semibold mb-3">Workout on {{ .Workout.date }}</h3>
-          <div class="space-y-2">
-            {{ range $exercise, $params := .Workout }}
-              {{ if ne $exercise "date" }}
-                <div class="flex items-baseline justify-between border rounded-md px-3 py-2">
-                  <span class="font-medium">{{$exercise}}</span>
-                  <span class="text-gray-700">
-                    {{ index $params 0 }} sets · {{ index $params 1 }} reps · {{ index $params 2 }} lbs
-                  </span>
-                </div>
-              {{ end }}
-            {{ end }}
+          <h3 class="text-xl font-semibold mb-3">Workout on {{ $thedate }}</h3>
+
+          <div class="overflow-x-auto rounded-lg border">
+            <table class="min-w-full text-sm">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th scope="col" class="text-left px-4 py-3 font-semibold">Workout</th>
+                  <th scope="col" class="text-left px-4 py-3 font-semibold">Date</th>
+                  <th scope="col" class="text-left px-4 py-3 font-semibold">Sets</th>
+                  <th scope="col" class="text-left px-4 py-3 font-semibold">Reps</th>
+                  <th scope="col" class="text-left px-4 py-3 font-semibold">Weight (lbs)</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y">
+                {{ range $exercise, $params := .Workout }}
+                  {{ if ne $exercise "date" }}
+                  <tr>
+                    <td class="px-4 py-3 font-medium">{{$exercise}}</td>
+                    <td class="px-4 py-3">{{$thedate}}</td>
+                    <td class="px-4 py-3">{{ index $params 0 }}</td>
+                    <td class="px-4 py-3">{{ index $params 1 }}</td>
+                    <td class="px-4 py-3">{{ index $params 2 }}</td>
+                  </tr>
+                  {{ end }}
+                {{ end }}
+              </tbody>
+            </table>
           </div>
         </section>
       {{ end }}
@@ -145,7 +161,6 @@
     const mobile_menu = document.getElementById('mobile-menu');
     const mobile_log_toggle = document.getElementById('mobile_log_toggle');
     const mobile_log_submenu = document.getElementById('mobile_log_submenu');
-
     const dropdown_trigger = document.querySelector('[data-dropdown-trigger]');
     const dropdown_menu = document.querySelector('[data-dropdown-menu]');
 

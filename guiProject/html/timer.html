@@ -3,93 +3,216 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Workout Timer | PRLog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://cdn.tailwindcss.com"></script>
-
   <style>
-    .hidden {
-      display: none;
-    }
-
-    .mode-tab.active {
-      background-color: #a78bfa; /* purple-400 */
-      color: white;
-      border: none;
-    }
-
-    .timer-section {
-      border: 1px solid #e5e7eb; /* Tailwind's gray-200 */
-      padding: 24px;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    }
+    .mode-tab.active { background-color:#a78bfa; color:#fff; border:none; }
+    .timer-section { border:1px solid #e5e7eb; padding:24px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,.05); }
+    .flash { animation: flash-bg .8s steps(2,end) 4; }
+    @keyframes flash-bg { 50% { background:#fef3c7; } }
   </style>
 </head>
-<body class="bg-white text-black font-sans">
+<body class="bg-white text-black font-sans antialiased min-h-screen flex flex-col">
 
-  <!-- Navbar -->
-   <header class="flex justify-between items-center px-6 py-4">
-    <div class="text-lg font-semibold">PRLog</div>
-    <nav class="flex items-center space-x-6">
-      <a href="/index" class="hover:underline">Home</a>
-      <a href="/features" class="hover:underline">Features</a>
-      <a href="#" class="hover:underline">My Log</a>
-      <a href="#" class="bg-black text-white px-4 py-2 rounded hover:opacity-90">User's Profile</a>
+  <!-- Header -->
+  <header class="sticky top-0 z-20 bg-white/80 backdrop-blur border-b">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="h-16 flex items-center justify-between">
+        <a href="/index" class="text-xl font-extrabold tracking-tight">PRLog</a>
+
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="/index" class="hover:underline">Home</a>
+          <a href="/features" class="hover:underline">Features</a>
+          <a href="/addWorkout" class="hover:underline">My Log</a>
+          <a href="/userProfile" class="bg-black text-white px-4 py-2 rounded-md hover:opacity-90">Profile</a>
+        </nav>
+
+        <button type="button" class="md:hidden inline-flex items-center justify-center p-2 rounded-md border" id="mobile_menu_button" aria-expanded="false" aria-controls="mobile-menu">
+          <span class="sr-only">Open main menu</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v2H4zM4 11h16v2H4zM4 16h16v2H4z"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <nav id="mobile-menu" class="md:hidden hidden border-t">
+      <div class="px-4 py-3 space-y-2">
+        <a href="/index" class="block px-3 py-2 rounded hover:bg-gray-50">Home</a>
+        <a href="/features" class="block px-3 py-2 rounded hover:bg-gray-50">Features</a>
+        <a href="/addWorkout" class="block px-3 py-2 rounded hover:bg-gray-50">My Log</a>
+        <a href="/userProfile" class="block bg-black text-white px-3 py-2 rounded hover:opacity-90">Profile</a>
+      </div>
     </nav>
-   </header>
+  </header>
 
-   <!-- Main Timer Section -->
-    <main class="flex flex-col items-center justify-center text-center px-4 py-24">
-    <h1 class="text-4xl font-bold text-purple-400 mb-6">Workout Timer</h1>
-    <p class="text-gray-600 mb-12 max-w-lg">
-      Use this timer to track your workouts or rest periods between sets.
-    </p>
+  <!-- Main -->
+  <main class="w-full grow">
+    <section class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
+      <h1 class="text-3xl sm:text-4xl font-bold text-purple-500 mb-4">Workout Timer</h1>
+      <p class="text-gray-600 mb-10 max-w-xl mx-auto">Use this timer to track workouts or rest periods between sets.</p>
 
-    <!-- Timer -->
-    <div class="w-full max-w-md mx-auto">
-      <!-- Mode Selector -->
-       <div class="flex justify-center space-x-4 mb-6">
-        <button id="countdownTab" class="mode-tab text-white border border-purple-400 bg-purple-400 px-4 py-2 rounded">Countdown</button>
-        <button id="stopwatchTab" class="mode-tab text-purple-400 border border-purple-400 px-4 py-2 rounded">Stopwatch</button>
-       </div>
-
-       <!-- Countdown Timer UI -->
-       <div id="countdownUI" class="timer-section">
-        <div class="mb-4">
-          <label class="block text-left mb-1">Minutes:</label>
-          <input id="countdownMinutes" type="number" min="0" class="w-full border px-3 py-2 rounded mb-2" />
-          <label class="block text-left mb-1">Seconds:</label>
-          <input id="countdownSeconds" type="number" min="0" max="59" class="w-full border px-3 py-2 rounded" />
+      <div class="w-full max-w-md mx-auto">
+        <div class="flex justify-center gap-3 sm:gap-4 mb-6">
+          <button id="countdownTab" class="mode-tab active text-white border border-purple-400 bg-purple-400 px-4 py-2 rounded">Countdown</button>
+          <button id="stopwatchTab" class="mode-tab text-purple-400 border border-purple-400 px-4 py-2 rounded">Stopwatch</button>
         </div>
-        <div id="countdownDisplay" class="text-4xl font-bold my-4">00:00</div>
-        <div class="flex justify-center space-x-6">
-          <button id="startCountdown" class="bg-purple-400 text-white px-4 py-2 rounded hover:bg-purple-500 active:bg-purple-600 active:scale-95 transition transform duration-75">Start</button>
-          <button id="pauseCountdown" class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition transform duration-75">Pause</button>
-          <button id="resetCountdown" class="bg-red-400 text-white px-4 py-2 rounded hover:bg-red-500 active:bg-red-600 active:scale-95 transition transform duration-75">Reset</button>
-        </div>
-      </div>
 
-        <!-- Stopwatch UI -->
-        <div id="stopwatchUI" class="timer-section hidden">
-          <div id="stopwatchDisplay" class="text-4xl font-bold my-6 text-center">00:00</div>
-          <div class="flex justify-center space-x-6">
-            <button id="startStopwatch" class="bg-purple-400 text-white px-4 py-2 rounded hover:bg-purple-500 active:bg-purple-600 active:scale-95 transition transform duration-75">Start</button>
-            <button id="pauseStopwatch" class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition transform duration-75">Pause</button>
-            <button id="resetStopwatch" class="bg-red-400 text-white px-4 py-2 rounded hover:bg-red-500 active:bg-red-600 active:scale-95 transition transform duration-75">Reset</button>
+        <!-- Countdown -->
+        <section id="countdownUI" class="timer-section">
+          <div class="mb-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
+            <div>
+              <label for="countdownMinutes" class="block mb-1">Minutes (optional)</label>
+              <input id="countdownMinutes" type="number" min="0" class="w-full border px-3 py-2 rounded" placeholder="0" />
+            </div>
+            <div>
+              <label for="countdownSeconds" class="block mb-1">Seconds</label>
+              <input id="countdownSeconds" type="number" min="0" max="59" class="w-full border px-3 py-2 rounded" placeholder="30" />
+            </div>
           </div>
-        </div>
+
+          <div id="countdownDisplay" class="text-5xl font-bold my-4 text-center" aria-live="polite">00:00</div>
+
+          <div class="flex flex-col sm:flex-row justify-center gap-3">
+            <button id="startCountdown" class="bg-purple-400 text-white px-4 py-2 rounded hover:bg-purple-500 active:bg-purple-600">Start</button>
+            <button id="pauseCountdown" class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400 active:bg-gray-500">Pause</button>
+            <button id="resetCountdown" class="bg-red-400 text-white px-4 py-2 rounded hover:bg-red-500 active:bg-red-600">Reset</button>
+          </div>
+        </section>
+
+        <!-- Stopwatch -->
+        <section id="stopwatchUI" class="timer-section hidden">
+          <div id="stopwatchDisplay" class="text-5xl font-bold my-6 text-center" aria-live="polite">00:00</div>
+          <div class="flex flex-col sm:flex-row justify-center gap-3">
+            <button id="startStopwatch" class="bg-purple-400 text-white px-4 py-2 rounded hover:bg-purple-500 active:bg-purple-600">Start</button>
+            <button id="pauseStopwatch" class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400 active:bg-gray-500">Pause</button>
+            <button id="resetStopwatch" class="bg-red-400 text-white px-4 py-2 rounded hover:bg-red-500 active:bg-red-600">Reset</button>
+          </div>
+        </section>
       </div>
-    </main>
-      <!-- Footer -->
-    <footer class="border-t mt-16 px-6 py-4 text-sm text-gray-500 flex justify-between items-center">
-      <span>PRLog</span>
-      <div class="space-x-4">
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 text-sm text-gray-500 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <span class="font-medium">PRLog</span>
+      <div class="flex gap-4">
         <a href="/index" class="hover:underline">Home</a>
         <a href="/features" class="hover:underline">Features</a>
         <a href="/signupPage" class="hover:underline">Sign Up</a>
       </div>
-    </footer>
-    <script src="js/timer.js"></script>
+    </div>
+  </footer>
+  
+  <script>
+    // mobile nav
+    const mobileBtn = document.getElementById('mobile_menu_button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileBtn?.addEventListener('click', () => {
+      const expanded = mobileBtn.getAttribute('aria-expanded') === 'true';
+      mobileBtn.setAttribute('aria-expanded', String(!expanded));
+      mobileMenu?.classList.toggle('hidden');
+    });
+
+    // tabs
+    const tabCountdown = document.getElementById('countdownTab');
+    const tabStopwatch = document.getElementById('stopwatchTab');
+    const uiCountdown = document.getElementById('countdownUI');
+    const uiStopwatch = document.getElementById('stopwatchUI');
+    function showTab(which){
+      const c = which === 'countdown';
+      tabCountdown.classList.toggle('active', c);
+      tabStopwatch.classList.toggle('active', !c);
+      uiCountdown.classList.toggle('hidden', !c);
+      uiStopwatch.classList.toggle('hidden', c);
+    }
+    tabCountdown.addEventListener('click', ()=>showTab('countdown'));
+    tabStopwatch.addEventListener('click', ()=>showTab('stopwatch'));
+
+    // countdown
+    const minInput = document.getElementById('countdownMinutes');
+    const secInput = document.getElementById('countdownSeconds');
+    const cdDisplay = document.getElementById('countdownDisplay');
+    const startCD = document.getElementById('startCountdown');
+    const pauseCD = document.getElementById('pauseCountdown');
+    const resetCD = document.getElementById('resetCountdown');
+    const alarm = document.getElementById('alarmSound');
+
+    let cdTimer = null;
+    let cdRemaining = 0;
+
+    function fmt(t){
+      const m = Math.floor(t/60).toString().padStart(2,'0');
+      const s = Math.floor(t%60).toString().padStart(2,'0');
+      return `${m}:${s}`;
+    }
+
+    function startCountdown(){
+      const m = parseInt(minInput.value, 10);
+      const s = parseInt(secInput.value, 10);
+      const mm = Number.isFinite(m) ? Math.max(0, m) : 0;   // default minutes to 0
+      const ss = Number.isFinite(s) ? Math.min(59, Math.max(0, s)) : 0;
+      if (!cdTimer && cdRemaining <= 0) cdRemaining = (mm * 60) + ss;
+      if (cdRemaining <= 0) return;
+      clearInterval(cdTimer);
+      cdTimer = setInterval(()=>{
+        cdRemaining -= 1;
+        cdDisplay.textContent = fmt(cdRemaining);
+        if (cdRemaining <= 0){
+          clearInterval(cdTimer); cdTimer = null;
+          cdDisplay.textContent = "00:00";
+          cdDisplay.classList.add('flash');
+          try { alarm.currentTime = 0; alarm.play(); } catch(e){}
+          if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+        }
+      }, 1000);
+      cdDisplay.textContent = fmt(cdRemaining);
+      cdDisplay.classList.remove('flash');
+    }
+
+    function pauseCountdown(){ clearInterval(cdTimer); cdTimer = null; }
+    function resetCountdown(){
+      pauseCountdown();
+      cdRemaining = 0;
+      cdDisplay.textContent = "00:00";
+      cdDisplay.classList.remove('flash');
+      try { alarm.pause(); alarm.currentTime = 0; } catch(e){}
+    }
+
+    startCD.addEventListener('click', startCountdown);
+    pauseCD.addEventListener('click', pauseCountdown);
+    resetCD.addEventListener('click', resetCountdown);
+
+    // stopwatch
+    const swDisplay = document.getElementById('stopwatchDisplay');
+    const startSW = document.getElementById('startStopwatch');
+    const pauseSW = document.getElementById('pauseStopwatch');
+    const resetSW = document.getElementById('resetStopwatch');
+
+    let swTimer = null;
+    let swElapsed = 0; // seconds
+    let swStartedAt = null;
+
+    function tickSW(){
+      const now = Date.now();
+      swElapsed = Math.floor((now - swStartedAt) / 1000);
+      swDisplay.textContent = fmt(swElapsed);
+    }
+
+    startSW.addEventListener('click', ()=>{
+      if (swTimer) return;
+      swStartedAt = Date.now() - (swElapsed * 1000);
+      swTimer = setInterval(tickSW, 250);
+      tickSW();
+    });
+    pauseSW.addEventListener('click', ()=>{
+      clearInterval(swTimer); swTimer = null;
+      tickSW();
+    });
+    resetSW.addEventListener('click', ()=>{
+      clearInterval(swTimer); swTimer = null;
+      swElapsed = 0; swDisplay.textContent = "00:00";
+    });
+  </script>
 </body>
 </html>
