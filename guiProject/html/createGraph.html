@@ -3,184 +3,213 @@
 <head>
   <meta charset="UTF-8" />
   <title>Create Graph | PRLog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://code.highcharts.com/highcharts.js"></script>
 </head>
-<body class="bg-white text-black font-sans min-h-screen pb-24">
-  <!-- Navbar -->
-  <header class="flex justify-between items-center px-6 py-4 border-b">
-    <h1 class="text-lg font-bold">PRLog</h1>
-    <nav class="space-x-6 hidden md:flex items-center">
-      <a href="/index" class="text-gray-700 hover:underline">Home</a>
-      <a href="/features" class="text-gray-700 hover:underline">Features</a>
+<body class="bg-white text-black font-sans min-h-screen flex flex-col antialiased">
+  <!-- Header -->
+  <header class="sticky top-0 z-20 bg-white/80 backdrop-blur border-b">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="h-16 flex items-center justify-between">
+        <a href="/index" class="text-xl font-extrabold tracking-tight">PRLog</a>
 
-      <!-- dropdown-->
-      <div class="relative group">
+        <!-- Desktop nav -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="/index" class="text-gray-700 hover:underline">Home</a>
+          <a href="/features" class="text-gray-700 hover:underline">Features</a>
 
-        <div class="flex flex-col">
-          <a href="/addWorkout" class="text-gray-700 hover:underline">My Log</a>
+          <div class="relative group">
+            <button
+              type="button"
+              class="text-gray-700 hover:underline inline-flex items-center gap-1"
+              aria-haspopup="true"
+              aria-expanded="false"
+              data-dropdown-trigger
+            >
+              My Log
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5H7z"/></svg>
+            </button>
+            <div
+              class="absolute left-0 mt-2 w-48 rounded-md border bg-white shadow-lg hidden group-hover:block"
+              data-dropdown-menu
+            >
+              <a href="/addWorkout" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Add Workout</a>
+              <a href="/calendar" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Calendar</a>
+              <a href="/createGraph" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Create Graph</a>
+            </div>
+          </div>
 
+          <a href="/userProfile" class="bg-black text-white px-4 py-2 rounded-md hover:opacity-90">Profile</a>
+        </nav>
 
-          <div class="h-2 absolute top-full w-full"></div>
-        </div>
-
-        <div class="absolute hidden group-hover:block bg-white  w-48 z-10 border">
-          <a href="/addWorkout" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Add Workout</a>
-          <a href="/calendar" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Calendar</a>
-          <a href="/createGraph" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Create Graph</a>
-        </div>
-        
+        <!-- Mobile menu button -->
+        <button
+          type="button"
+          class="md:hidden inline-flex items-center justify-center p-2 rounded-md border"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+          id="mobile_menu_button"
+        >
+          <span class="sr-only">Open main menu</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v2H4zM4 11h16v2H4zM4 16h16v2H4z"/></svg>
+        </button>
       </div>
-      <!-- -->
-
-      <a href="/userProfile" class="bg-black text-white px-4 py-2 rounded hover:opacity-90">Profile</a>
-    </nav>
-  </header>
-  
-
-  <!-- Main Content -->
-  <main class="max-w-2xl mx-auto px-4 py-12 text-center">
-    <h2 class="text-4xl font-bold text-purple-500 mb-2">Create a Graph</h2>
-    <p class="text-gray-600 mb-8">Select a date range and a workout to graph your progress over time.</p>
-
-    <div class="flex gap-4">
-      <a href="/addWorkout" class="bg-black text-white px-4 py-2 rounded hover:opacity-90">Add Workout</a>
-      <a href="/calendar" class="bg-black text-white px-4 py-2 rounded hover:opacity-90">View Calendar</a>
     </div>
 
-    <form id="graphForm" class="space-y-4">
-      <!-- Start Date -->
-      <div>
-        <label for="startDate" class="block font-medium mb-1">Start Date</label>
-        <input type="date" name="startDate" id="startDate" required class="w-full border px-3 py-2 rounded" />
+    <!-- Mobile menu -->
+    <nav id="mobile-menu" class="md:hidden hidden border-t">
+      <div class="px-4 py-3 space-y-2">
+        <a href="/index" class="block px-3 py-2 rounded hover:bg-gray-50">Home</a>
+        <a href="/features" class="block px-3 py-2 rounded hover:bg-gray-50">Features</a>
+
+        <div class="border-t pt-2">
+          <button
+            type="button"
+            class="w-full flex items-center justify-between px-3 py-2 rounded hover:bg-gray-50"
+            aria-controls="mobile_log_submenu"
+            aria-expanded="false"
+            id="mobile_log_toggle"
+          >
+            <span>My Log</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5H7z"/></svg>
+          </button>
+          <div id="mobile_log_submenu" class="hidden pl-3">
+            <a href="/addWorkout" class="block px-3 py-2 rounded hover:bg-gray-50">Add Workout</a>
+            <a href="/calendar" class="block px-3 py-2 rounded hover:bg-gray-50">Calendar</a>
+            <a href="/createGraph" class="block px-3 py-2 rounded hover:bg-gray-50">Create Graph</a>
+          </div>
+        </div>
+
+        <a href="/userProfile" class="block bg-black text-white px-3 py-2 rounded hover:opacity-90">Profile</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main -->
+  <main class="w-full grow">
+    <section class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 text-center">
+      <h2 class="text-3xl sm:text-4xl font-bold text-purple-500 mb-2">Create a Graph</h2>
+      <p class="text-gray-600 mb-6">Select a date range and a workout to graph your progress.</p>
+
+      <div class="flex flex-col sm:flex-row gap-3 justify-center mb-8">
+        <a href="/addWorkout" class="inline-flex justify-center bg-black text-white px-4 py-2 rounded hover:opacity-90">Add Workout</a>
+        <a href="/calendar" class="inline-flex justify-center bg-black text-white px-4 py-2 rounded hover:opacity-90">View Calendar</a>
       </div>
 
-      <!-- End Date -->
-      <div>
-        <label for="endDate" class="block font-medium mb-1">End Date</label>
-        <input type="date" name="endDate" id="endDate" required class="w-full border px-3 py-2 rounded" />
-      </div>
+      <form id="graph_form" class="space-y-5 text-left border rounded-2xl p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label for="startDate" class="block font-medium mb-1">Start Date</label>
+            <input type="date" name="startDate" id="startDate" required class="w-full border px-3 py-2 rounded" />
+          </div>
+          <div>
+            <label for="endDate" class="block font-medium mb-1">End Date</label>
+            <input type="date" name="endDate" id="endDate" required class="w-full border px-3 py-2 rounded" />
+          </div>
+        </div>
 
-      <!-- Workout Selection -->
-      <div>
-        <label for="workout" class="block font-medium mb-1">Workout</label>
-        <input type="text" name="workout" id="workout" required class="w-full border px-3 py-2 rounded">
+        <div>
+          <label for="workout" class="block font-medium mb-1">Workout</label>
+          <input type="text" name="workout" id="workout" required class="w-full border px-3 py-2 rounded" />
+        </div>
 
-          <!-- We can add more later, or even better, pull only workout names that appear between selected dates -->
-      </div>
+        <button id="submit_btn" type="submit" class="w-full sm:w-auto bg-black text-white px-5 py-2.5 rounded-md hover:opacity-90">
+          Graph It!
+        </button>
+      </form>
+    </section>
 
-      <!-- Submit Button -->
-      <button id ="submitButton" type="submit" class="bg-black text-white px-4 py-2 rounded hover:opacity-90">
-        Graph It!
-      </button>
-    </form>
+    <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+      <div id="container" class="w-full" style="height:420px;"></div>
+    </section>
   </main>
 
-
-
-
-  
-  <div id="container" style="width:100%; height:400px;"></div>
-
-
-
-  <script>
-    document.getElementById("graphForm").addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      //collects form data from this submission
-      const formData = new FormData(this);
-      
-      //sebds form data to server at route /generateGraph to get a response
-      fetch('/generateGraph', {
-        method: 'POST',
-        body: formData
-      })
-      
-      //change response to not be a json
-      .then(function(response) {
-        return response.json();
-      })
-
-      .then(function(data) {
-
-
-        var newData = data.dates.map(function(date, index) {
-          //loops to set newData values
-          return {
-            date: new Date(date).getTime(),
-            weight: data.weights[index],
-            reps: data.reps[index],
-            sets: data.sets[index]
-          };
-
-        });
-        
-        //we need to sort by date or else the graph messes up
-        newData.sort(function(a, b) {
-          return a.date - b.date;
-        });
-
-        //create the chart
-        Highcharts.chart('container', {
-          chart: { type: 'line' },
-
-          title: { text:'Progress' },
-
-          xAxis: {
-            type: 'datetime',
-            title: { text: 'Date' },
-            dateTimeLabelFormats: { day: '%m/%d/%Y' }
-          },
-
-          yAxis: [{
-            title: { text: 'Weight(lbs)' }
-          }, {
-            title: { text: 'Reps/Sets' },
-            opposite: true
-          }],
-
-          //settings for weight line
-          series: [{
-            name: 'Weight (lbs)',
-            data: newData.map(d => [d.date, d.weight]),
-            color: '#9f59f9',
-            yAxis: 0
-          }, 
-
-          //settings for reps line
-          {
-            name: 'Reps',
-            data: newData.map(d => [d.date, d.reps]),
-            color: '#59b4f9',
-            yAxis: 1,
-            visible: false //hidden by default
-          }, 
-          //settinsg for sets line
-          {
-            name: 'Sets',
-            data: newData.map(d => [d.date, d.sets]),
-            color: '#59f9a5',
-            yAxis: 1,
-            visible: false //hidden by default
-          }]
-        });
-      })
-    });
-  </script>
-
-
-
-
-
-   <!-- Footer -->
-    <footer class="border-t mt-16 px-6 py-4 text-sm text-gray-500 flex justify-between items-center">
-      <span>PRLog</span>
-      <div class="space-x-4">
+  <!-- Footer -->
+  <footer class="border-t mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 text-sm text-gray-500 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <span class="font-medium">PRLog</span>
+      <div class="flex gap-4">
         <a href="/index" class="hover:underline">Home</a>
         <a href="/features" class="hover:underline">Features</a>
         <a href="/signupPage" class="hover:underline">Sign Up</a>
       </div>
-    </footer>
+    </div>
+  </footer>
+
+  <script>
+    const mobile_menu_btn = document.getElementById('mobile_menu_button');
+    const mobile_menu = document.getElementById('mobile-menu');
+    const mobile_log_toggle = document.getElementById('mobile_log_toggle');
+    const mobile_log_submenu = document.getElementById('mobile_log_submenu');
+    const dropdown_trigger = document.querySelector('[data-dropdown-trigger]');
+    const dropdown_menu = document.querySelector('[data-dropdown-menu]');
+
+    function toggleHidden(el){ el.classList.toggle('hidden'); }
+
+    mobile_menu_btn?.addEventListener('click', () => {
+      const expanded = mobile_menu_btn.getAttribute('aria-expanded') === 'true';
+      mobile_menu_btn.setAttribute('aria-expanded', String(!expanded));
+      toggleHidden(mobile_menu);
+    });
+
+    mobile_log_toggle?.addEventListener('click', () => {
+      const expanded = mobile_log_toggle.getAttribute('aria-expanded') === 'true';
+      mobile_log_toggle.setAttribute('aria-expanded', String(!expanded));
+      mobile_log_toggle.querySelector('svg')?.classList.toggle('rotate-180');
+      toggleHidden(mobile_log_submenu);
+    });
+
+    dropdown_trigger?.addEventListener('click', (e) => {
+      e.preventDefault();
+      dropdown_menu?.classList.toggle('hidden');
+    });
+    document.addEventListener('click', (e) => {
+      if (!dropdown_menu || !dropdown_trigger) return;
+      if (!dropdown_menu.contains(e.target) && !dropdown_trigger.contains(e.target)) {
+        dropdown_menu.classList.add('hidden');
+      }
+    });
+
+    document.getElementById('graph_form')?.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+
+      fetch('/generateGraph', { method: 'POST', body: formData })
+        .then(res => res.json())
+        .then(data => {
+          const points = data.dates.map((d, i) => ({
+            date: new Date(d).getTime(),
+            weight: data.weights[i],
+            reps: data.reps[i],
+            sets: data.sets[i]
+          })).sort((a, b) => a.date - b.date);
+
+          Highcharts.chart('container', {
+            chart: { type: 'line' },
+            title: { text: 'Progress' },
+            xAxis: { type: 'datetime', title: { text: 'Date' }, dateTimeLabelFormats: { day: '%m/%d/%Y' } },
+            yAxis: [{ title: { text: 'Weight (lbs)' } }, { title: { text: 'Reps/Sets' }, opposite: true }],
+            series: [
+              { name: 'Weight (lbs)', data: points.map(p => [p.date, p.weight]), color: '#9f59f9', yAxis: 0 },
+              { name: 'Reps', data: points.map(p => [p.date, p.reps]), color: '#59b4f9', yAxis: 1, visible: false },
+              { name: 'Sets', data: points.map(p => [p.date, p.sets]), color: '#59f9a5', yAxis: 1, visible: false }
+            ],
+            responsive: {
+              rules: [{
+                condition: { maxWidth: 640 },
+                chartOptions: { legend: { enabled: true } }
+              }]
+            }
+          });
+        })
+        .catch(() => {
+          Highcharts.chart('container', {
+            title: { text: 'No data' },
+            series: []
+          });
+        });
+    });
+  </script>
 </body>
 </html>

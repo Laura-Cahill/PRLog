@@ -2,89 +2,172 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>My Profile</title>
+  <title>My Profile | PRLog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
-<body class="bg-white text-black font-sans min-h-screen flex flex-col">
+<body class="bg-white text-black font-sans min-h-screen flex flex-col antialiased">
+  <!-- Header -->
+  <header class="sticky top-0 z-20 bg-white/80 backdrop-blur border-b">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="h-16 flex items-center justify-between">
+        <a href="/index" class="text-xl font-extrabold tracking-tight">PRLog</a>
 
-  <!-- Navbar -->
-  <header class="flex justify-between items-center px-6 py-4 border-b">
-    <h1 class="text-lg font-bold">PRLog</h1>
-    <nav class="space-x-6 hidden md:flex items-center">
-      <a href="/index" class="text-gray-700 hover:underline">Home</a>
-      <a href="/features" class="text-gray-700 hover:underline">Features</a>
+        <!-- Desktop nav -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="/index" class="text-gray-700 hover:underline">Home</a>
+          <a href="/features" class="text-gray-700 hover:underline">Features</a>
 
-      <!-- dropdown-->
-      <div class="relative group">
+          <!-- My Log dropdown -->
+          <div class="relative group">
+            <button
+              type="button"
+              class="text-gray-700 hover:underline inline-flex items-center gap-1"
+              aria-haspopup="true"
+              aria-expanded="false"
+              data-dropdown-trigger
+            >
+              My Log
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5H7z"/></svg>
+            </button>
+            <div
+              class="absolute left-0 mt-2 w-48 rounded-md border bg-white shadow-lg hidden group-hover:block"
+              data-dropdown-menu
+            >
+              <a href="/addWorkout" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Add Workout</a>
+              <a href="/calendar" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Calendar</a>
+              <a href="/createGraph" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Create Graph</a>
+            </div>
+          </div>
 
-        <div class="flex flex-col">
-          <a href="/addWorkout" class="text-gray-700 hover:underline">My Log</a>
+          <a href="/userProfile" class="bg-black text-white px-4 py-2 rounded-md hover:opacity-90">Profile</a>
+        </nav>
 
-
-          <div class="h-2 absolute top-full w-full"></div>
-        </div>
-
-        <div class="absolute hidden group-hover:block bg-white  w-48 z-10 border">
-          <a href="/addWorkout" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Add Workout</a>
-          <a href="/calendar" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Calendar</a>
-          <a href="/createGraph" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Create Graph</a>
-        </div>
-        
+        <!-- Mobile menu button -->
+        <button
+          type="button"
+          class="md:hidden inline-flex items-center justify-center p-2 rounded-md border"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+          id="mobile_menu_button"
+        >
+          <span class="sr-only">Open main menu</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v2H4zM4 11h16v2H4zM4 16h16v2H4z"/></svg>
+        </button>
       </div>
-      <!-- -->
+    </div>
 
-      <a href="/userProfile" class="bg-black text-white px-4 py-2 rounded hover:opacity-90">Profile</a>
+    <!-- Mobile menu -->
+    <nav id="mobile-menu" class="md:hidden hidden border-t">
+      <div class="px-4 py-3 space-y-2">
+        <a href="/index" class="block px-3 py-2 rounded hover:bg-gray-50">Home</a>
+        <a href="/features" class="block px-3 py-2 rounded hover:bg-gray-50">Features</a>
+
+        <div class="border-t pt-2">
+          <button
+            type="button"
+            class="w-full flex items-center justify-between px-3 py-2 rounded hover:bg-gray-50"
+            aria-controls="mobile_log_submenu"
+            aria-expanded="false"
+            id="mobile_log_toggle"
+          >
+            <span>My Log</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5H7z"/></svg>
+          </button>
+          <div id="mobile_log_submenu" class="hidden pl-3">
+            <a href="/addWorkout" class="block px-3 py-2 rounded hover:bg-gray-50">Add Workout</a>
+            <a href="/calendar" class="block px-3 py-2 rounded hover:bg-gray-50">Calendar</a>
+            <a href="/createGraph" class="block px-3 py-2 rounded hover:bg-gray-50">Create Graph</a>
+          </div>
+        </div>
+
+        <a href="/userProfile" class="block bg-black text-white px-3 py-2 rounded hover:opacity-90">Profile</a>
+      </div>
     </nav>
   </header>
 
+  <!-- Main -->
+  <main class="w-full grow">
+    <section class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
+      <h2 class="text-3xl sm:text-4xl font-bold text-purple-500 mb-2">My Profile</h2>
+      <p class="text-gray-600 mb-8">This is your profile with your account info.</p>
 
+      <form action="/userInfo" method="POST" class="space-y-6 text-left">
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-0 border rounded-lg overflow-hidden">
+          <label for="name" class="bg-purple-100 px-4 py-3 font-medium sm:col-span-1">Name</label>
+          <div class="sm:col-span-3">
+            <input id="name" name="name" type="text" value="{{.name}}" class="w-full px-4 py-3 border-t sm:border-t-0 sm:border-l border-gray-200 focus:outline-none" />
+          </div>
 
-  <!-- Main Content -->
-  <main class="max-w-2xl mx-auto px-4 py-12 text-center grow">
-    <h2 class="text-4xl font-bold text-purple-500 mb-2">My Profile</h2>
-    <p class="text-gray-600 mb-8">This is your profile which has some information about your account.</p>
+          <label for="email" class="bg-purple-100 px-4 py-3 font-medium sm:col-span-1 border-t border-purple-200 sm:border-0">Email</label>
+          <div class="sm:col-span-3">
+            <input id="email" name="email" type="email" value="{{.email}}" class="w-full px-4 py-3 border-t sm:border-t-0 sm:border-l border-gray-200 focus:outline-none" />
+          </div>
 
-    <!-- Info Table -->
+          <div class="bg-purple-100 px-4 py-3 font-medium sm:col-span-1 border-t border-purple-200 sm:border-0">Joined</div>
+          <div class="px-4 py-3 sm:col-span-3 border-t sm:border-t-0 sm:border-l border-gray-200">{{.since}}</div>
 
+          <div class="bg-purple-100 px-4 py-3 font-medium sm:col-span-1 border-t border-purple-200 sm:border-0">Workouts Logged</div>
+          <div class="px-4 py-3 sm:col-span-3 border-t sm:border-t-0 sm:border-l border-gray-200">{{.logged}}</div>
+        </div>
 
-    <form action="/userInfo" method="POST" class="mb-6">
-    <div class="grid grid-cols-2 text-left border border-gray-200 rounded overflow-hidden mb-8">
+        <div class="text-center">
+          <button type="submit" class="bg-black text-white px-6 py-2 rounded-md hover:opacity-90">Save Info</button>
+        </div>
+      </form>
 
-      <div class="bg-purple-100 px-4 py-3 font-medium">Name:</div>
-      <input type="text" name="name" value="{{.name}}" />
-
-      <div class="bg-purple-100 px-4 py-3 font-medium">Email:</div>
-      <input type="email" name="email" value="{{.email}}" />
-
-      <div class="bg-purple-100 px-4 py-3 font-medium">Joined:</div>
-      <div class="px-4 py-3">{{.since}}</div>
-
-      <div class="bg-purple-100 px-4 py-3 font-medium">Workouts Logged:</div>
-      <div class="px-4 py-3">{{.logged}}</div>
-
-    </div>
-    <div class="text-center mt-4">
-      <button type="submit" class="bg-black text-white px-6 py-2 rounded hover:opacity-90">Save Info</button>
-    </div>
-  </form>
-
-
-
-    <!-- Log Out Button -->
-    <form action="/logout" method="POST" class="text-center">
-      <button type="submit" class="bg-black text-white px-6 py-2 rounded hover:opacity-90">Log Out</button>
-    </form>
+      <form action="/logout" method="POST" class="mt-6">
+        <button type="submit" class="bg-black text-white px-6 py-2 rounded-md hover:opacity-90">Log Out</button>
+      </form>
+    </section>
   </main>
 
   <!-- Footer -->
-  <footer class="w-full border-t px-6 py-4 text-sm text-gray-500 flex justify-between items-center">
-    <span>PRLog</span>
-    <div class="space-x-4">
-      <a href="/index" class="hover:underline">Home</a>
-      <a href="/features" class="hover:underline">Features</a>
-      <a href="/signupPage" class="hover:underline">Sign Up</a>
+  <footer class="w-full border-t mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 text-sm text-gray-500 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <span class="font-medium">PRLog</span>
+      <div class="flex gap-4">
+        <a href="/index" class="hover:underline">Home</a>
+        <a href="/features" class="hover:underline">Features</a>
+        <a href="/signupPage" class="hover:underline">Sign Up</a>
+      </div>
     </div>
   </footer>
+
+  <script>
+    const mobile_menu_btn = document.getElementById('mobile_menu_button');
+    const mobile_menu = document.getElementById('mobile-menu');
+    const mobile_log_toggle = document.getElementById('mobile_log_toggle');
+    const mobile_log_submenu = document.getElementById('mobile_log_submenu');
+    const dropdown_trigger = document.querySelector('[data-dropdown-trigger]');
+    const dropdown_menu = document.querySelector('[data-dropdown-menu]');
+
+    function toggleHidden(el){ el.classList.toggle('hidden'); }
+
+    mobile_menu_btn?.addEventListener('click', () => {
+      const expanded = mobile_menu_btn.getAttribute('aria-expanded') === 'true';
+      mobile_menu_btn.setAttribute('aria-expanded', String(!expanded));
+      toggleHidden(mobile_menu);
+    });
+
+    mobile_log_toggle?.addEventListener('click', () => {
+      const expanded = mobile_log_toggle.getAttribute('aria-expanded') === 'true';
+      mobile_log_toggle.setAttribute('aria-expanded', String(!expanded));
+      mobile_log_toggle.querySelector('svg')?.classList.toggle('rotate-180');
+      toggleHidden(mobile_log_submenu);
+    });
+
+    dropdown_trigger?.addEventListener('click', (e) => {
+      e.preventDefault();
+      dropdown_menu?.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!dropdown_menu || !dropdown_trigger) return;
+      if (!dropdown_menu.contains(e.target) && !dropdown_trigger.contains(e.target)) {
+        dropdown_menu.classList.add('hidden');
+      }
+    });
+  </script>
 </body>
 </html>

@@ -13,27 +13,16 @@
       <div class="h-16 flex items-center justify-between">
         <a href="/index" class="text-xl font-extrabold tracking-tight">PRLog</a>
 
-        <!-- Desktop nav -->
         <nav class="hidden md:flex items-center gap-6">
           <a href="/index" class="text-gray-700 hover:underline">Home</a>
           <a href="/features" class="text-gray-700 hover:underline">Features</a>
 
-          <!-- My Log dropdown -->
           <div class="relative group">
-            <button
-              type="button"
-              class="text-gray-700 hover:underline inline-flex items-center gap-1"
-              aria-haspopup="true"
-              aria-expanded="false"
-              data-dropdown-trigger
-            >
+            <button type="button" class="text-gray-700 hover:underline inline-flex items-center gap-1" aria-haspopup="true" aria-expanded="false" data-dropdown-trigger>
               My Log
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5H7z"/></svg>
             </button>
-            <div
-              class="absolute left-0 mt-2 w-48 rounded-md border bg-white shadow-lg hidden group-hover:block"
-              data-dropdown-menu
-            >
+            <div class="absolute left-0 mt-2 w-48 rounded-md border bg-white shadow-lg hidden group-hover:block" data-dropdown-menu>
               <a href="/addWorkout" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Add Workout</a>
               <a href="/calendar" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">View Calendar</a>
               <a href="/createGraph" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Create Graph</a>
@@ -43,34 +32,20 @@
           <a href="/userProfile" class="bg-black text-white px-4 py-2 rounded-md hover:opacity-90">Profile</a>
         </nav>
 
-        <!-- Mobile menu button -->
-        <button
-          type="button"
-          class="md:hidden inline-flex items-center justify-center p-2 rounded-md border"
-          aria-controls="mobile-menu"
-          aria-expanded="false"
-          id="mobile_menu_button"
-        >
+        <button type="button" class="md:hidden inline-flex items-center justify-center p-2 rounded-md border" aria-controls="mobile-menu" aria-expanded="false" id="mobile_menu_button">
           <span class="sr-only">Open main menu</span>
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v2H4zM4 11h16v2H4zM4 16h16v2H4z"/></svg>
         </button>
       </div>
     </div>
 
-    <!-- Mobile menu -->
     <nav id="mobile-menu" class="md:hidden hidden border-t">
       <div class="px-4 py-3 space-y-2">
         <a href="/index" class="block px-3 py-2 rounded hover:bg-gray-50">Home</a>
         <a href="/features" class="block px-3 py-2 rounded hover:bg-gray-50">Features</a>
 
         <div class="border-t pt-2">
-          <button
-            type="button"
-            class="w-full flex items-center justify-between px-3 py-2 rounded hover:bg-gray-50"
-            aria-controls="mobile_log_submenu"
-            aria-expanded="false"
-            id="mobile_log_toggle"
-          >
+          <button type="button" class="w-full flex items-center justify-between px-3 py-2 rounded hover:bg-gray-50" aria-controls="mobile_log_submenu" aria-expanded="false" id="mobile_log_toggle">
             <span>My Log</span>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5H7z"/></svg>
           </button>
@@ -89,35 +64,22 @@
   <!-- Main -->
   <main class="w-full grow">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
-      <!-- Intro / Actions -->
       <section class="space-y-4">
         <h2 class="text-2xl sm:text-3xl font-bold">My Log</h2>
-        <p class="text-gray-600 max-w-2xl">
-          Here you can add a workout, create a graph, or pick a date to look back at past workouts.
-        </p>
+        <p class="text-gray-600 max-w-2xl">Here you can add a workout, create a graph, or pick a date to look back at past workouts.</p>
         <div class="flex flex-col sm:flex-row gap-3">
           <a href="/calendar" class="inline-flex justify-center bg-black text-white px-4 py-2 rounded hover:opacity-90">View Calendar</a>
           <a href="/createGraph" class="inline-flex justify-center bg-black text-white px-4 py-2 rounded hover:opacity-90">Create Graph</a>
         </div>
         <div class="mt-4 max-w-sm">
           <label for="calendar" class="block mb-2 font-medium">Select a date</label>
-          <input
-            type="date"
-            id="calendar"
-            class="w-full border border-gray-300 rounded px-3 py-2"
-            value="{{ .Date }}"
-          />
+          <input type="date" id="calendar" class="w-full border border-gray-300 rounded px-3 py-2" value="{{ .Date }}" />
         </div>
       </section>
 
-      {{ if .AddError }}
-      <p class="text-red-500">{{ .AddError }}</p>
-      {{ end }}
-      {{ if .Success }}
-      <p class="text-green-500">{{ .Success }}</p>
-      {{ end }}
+      {{ if .AddError }}<p class="text-red-500">{{ .AddError }}</p>{{ end }}
+      {{ if .Success }}<p class="text-green-500">{{ .Success }}</p>{{ end }}
 
-      <!-- Add Workout Form -->
       <section class="border rounded-2xl p-6 sm:p-8">
         <h3 class="text-xl sm:text-2xl font-semibold mb-4">Add a Workout</h3>
         <form action="/addWorkout/add" method="POST" class="space-y-5" id="workout_form">
@@ -143,11 +105,52 @@
 
           <input type="hidden" name="date" id="workout_date" value="{{ .Date }}" />
 
-          <button type="submit" class="w-full sm:w-auto bg-black text-white px-5 py-2.5 rounded-md hover:opacity-90">
-            Add Exercise
-          </button>
+          <button type="submit" class="w-full sm:w-auto bg-black text-white px-5 py-2.5 rounded-md hover:opacity-90">Add Exercise</button>
         </form>
       </section>
+
+      <!-- Logged workouts table -->
+      {{ if .Workouts }}
+      <section aria-labelledby="logged_workouts_heading" class="space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 id="logged_workouts_heading" class="text-xl sm:text-2xl font-semibold">Logged Workouts</h3>
+          <span class="text-sm text-gray-500">{{ len .Workouts }} total</span>
+        </div>
+
+        <div class="overflow-x-auto rounded-lg border">
+          <table class="min-w-full text-sm">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="text-left px-4 py-3 font-semibold">Workout</th>
+                <th class="text-left px-4 py-3 font-semibold">Date</th>
+                <th class="text-left px-4 py-3 font-semibold">Sets</th>
+                <th class="text-left px-4 py-3 font-semibold">Reps</th>
+                <th class="text-left px-4 py-3 font-semibold">Weight (lbs)</th>
+                <th class="text-left px-4 py-3 font-semibold">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="workouts_tbody" class="divide-y">
+              {{ range $i, $w := .Workouts }}
+                {{/* expecting a map: id, exercise, date, sets, reps, weight */}}
+                <tr data-id="{{ index $w "id" }}">
+                  <td class="px-4 py-3 font-medium">{{ index $w "exercise" }}</td>
+                  <td class="px-4 py-3">{{ index $w "date" }}</td>
+                  <td class="px-4 py-3">{{ index $w "sets" }}</td>
+                  <td class="px-4 py-3">{{ index $w "reps" }}</td>
+                  <td class="px-4 py-3">{{ index $w "weight" }}</td>
+                  <td class="px-4 py-3">
+                    <form action="/addWorkout/delete" method="POST" class="inline delete_workout_form">
+                      <input type="hidden" name="id" value="{{ index $w "id" }}" />
+                      <button type="submit" class="text-red-600 hover:underline">Delete</button>
+                    </form>
+                  </td>
+                </tr>
+              {{ end }}
+            </tbody>
+          </table>
+        </div>
+      </section>
+      {{ end }}
     </div>
   </main>
 
@@ -168,30 +171,24 @@
     const mobile_menu = document.getElementById('mobile-menu');
     const mobile_log_toggle = document.getElementById('mobile_log_toggle');
     const mobile_log_submenu = document.getElementById('mobile_log_submenu');
-
     const dropdown_trigger = document.querySelector('[data-dropdown-trigger]');
     const dropdown_menu = document.querySelector('[data-dropdown-menu]');
-
     const calendar_input = document.getElementById('calendar');
     const workout_date_input = document.getElementById('workout_date');
 
-    function toggle_hidden(el) {
-      el.classList.toggle('hidden');
-    }
+    function toggle_hidden(el){ el.classList.toggle('hidden'); }
 
     mobile_menu_btn?.addEventListener('click', () => {
       const expanded = mobile_menu_btn.getAttribute('aria-expanded') === 'true';
       mobile_menu_btn.setAttribute('aria-expanded', String(!expanded));
       toggle_hidden(mobile_menu);
     });
-
     mobile_log_toggle?.addEventListener('click', () => {
       const expanded = mobile_log_toggle.getAttribute('aria-expanded') === 'true';
       mobile_log_toggle.setAttribute('aria-expanded', String(!expanded));
       mobile_log_toggle.querySelector('svg')?.classList.toggle('rotate-180');
       toggle_hidden(mobile_log_submenu);
     });
-
     dropdown_trigger?.addEventListener('click', (e) => {
       e.preventDefault();
       dropdown_menu?.classList.toggle('hidden');
@@ -204,8 +201,55 @@
     });
 
     calendar_input?.addEventListener('change', (e) => {
-      workout_date_input && (workout_date_input.value = e.target.value);
+      if (workout_date_input) workout_date_input.value = e.target.value;
     });
+
+    // optional AJAX add + delete; works with server fallback
+    const workout_form = document.getElementById('workout_form');
+    const workouts_tbody = document.getElementById('workouts_tbody');
+
+    workout_form?.addEventListener('submit', async (e) => {
+      if (!workouts_tbody) return; // let normal POST happen if table not present
+      e.preventDefault();
+      const form_data = new FormData(workout_form);
+      const res = await fetch(workout_form.action, { method: 'POST', body: form_data, headers: { 'Accept': 'application/json' } });
+      if (!res.ok) { workout_form.submit(); return; }
+      const item = await res.json(); // expect {id, exercise, date, sets, reps, weight}
+      const tr = document.createElement('tr');
+      tr.setAttribute('data-id', item.id);
+      tr.innerHTML = `
+        <td class="px-4 py-3 font-medium">${item.exercise}</td>
+        <td class="px-4 py-3">${item.date}</td>
+        <td class="px-4 py-3">${item.sets}</td>
+        <td class="px-4 py-3">${item.reps}</td>
+        <td class="px-4 py-3">${item.weight}</td>
+        <td class="px-4 py-3">
+          <form action="/addWorkout/delete" method="POST" class="inline delete_workout_form">
+            <input type="hidden" name="id" value="${item.id}" />
+            <button type="submit" class="text-red-600 hover:underline">Delete</button>
+          </form>
+        </td>`;
+      workouts_tbody.prepend(tr);
+      workout_form.reset();
+      if (workout_date_input && calendar_input) workout_date_input.value = calendar_input.value;
+    });
+
+    function wire_delete_forms(scope=document){
+      scope.querySelectorAll('.delete_workout_form')?.forEach(f=>{
+        f.addEventListener('submit', async (e)=>{
+          if (!confirm('Delete this workout?')) return e.preventDefault();
+          if (!window.fetch) return; // allow normal POST fallback
+          e.preventDefault();
+          const fd = new FormData(f);
+          const res = await fetch(f.action, { method:'POST', body: fd, headers: { 'Accept':'application/json' } });
+          if (!res.ok) { f.submit(); return; }
+          const { id } = await res.json(); // expect {id}
+          const row = document.querySelector(`tr[data-id="${id}"]`);
+          row?.remove();
+        });
+      });
+    }
+    wire_delete_forms();
   </script>
 </body>
 </html>

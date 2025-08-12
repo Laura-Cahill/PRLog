@@ -3,84 +3,192 @@
 <head>
   <meta charset="UTF-8" />
   <title>Calendar | PRLog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-white text-black font-sans min-h-screen flex flex-col">
-  <!-- Navbar -->
-  <header class="flex justify-between items-center px-6 py-4 border-b">
-    <h1 class="text-lg font-bold">PRLog</h1>
-    <nav class="space-x-6 hidden md:flex items-center">
-      <a href="/index" class="text-gray-700 hover:underline">Home</a>
-      <a href="/features" class="text-gray-700 hover:underline">Features</a>
+<body class="bg-white text-black font-sans min-h-screen flex flex-col antialiased">
+  <!-- Header -->
+  <header class="sticky top-0 z-20 bg-white/80 backdrop-blur border-b">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="h-16 flex items-center justify-between">
+        <a href="/index" class="text-xl font-extrabold tracking-tight">PRLog</a>
 
-      <!-- dropdown-->
-      <div class="relative group">
+        <!-- Desktop nav -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="/index" class="text-gray-700 hover:underline">Home</a>
+          <a href="/features" class="text-gray-700 hover:underline">Features</a>
 
-        <div class="flex flex-col">
-          <a href="/addWorkout" class="text-gray-700 hover:underline">My Log</a>
+          <div class="relative group">
+            <button
+              type="button"
+              class="text-gray-700 hover:underline inline-flex items-center gap-1"
+              aria-haspopup="true"
+              aria-expanded="false"
+              data-dropdown-trigger
+            >
+              My Log
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5H7z"/></svg>
+            </button>
+            <div
+              class="absolute left-0 mt-2 w-48 rounded-md border bg-white shadow-lg hidden group-hover:block"
+              data-dropdown-menu
+            >
+              <a href="/addWorkout" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Add Workout</a>
+              <a href="/calendar" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Calendar</a>
+              <a href="/createGraph" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Create Graph</a>
+            </div>
+          </div>
 
+          <a href="/userProfile" class="bg-black text-white px-4 py-2 rounded-md hover:opacity-90">Profile</a>
+        </nav>
 
-          <div class="h-2 absolute top-full w-full"></div>
-        </div>
-
-        <div class="absolute hidden group-hover:block bg-white  w-48 z-10 border">
-          <a href="/addWorkout" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Add Workout</a>
-          <a href="/calendar" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Calendar</a>
-          <a href="/createGraph" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Create Graph</a>
-        </div>
-        
+        <!-- Mobile menu button -->
+        <button
+          type="button"
+          class="md:hidden inline-flex items-center justify-center p-2 rounded-md border"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+          id="mobile_menu_button"
+        >
+          <span class="sr-only">Open main menu</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v2H4zM4 11h16v2H4zM4 16h16v2H4z"/></svg>
+        </button>
       </div>
-      <!-- -->
+    </div>
 
-      <a href="/userProfile" class="bg-black text-white px-4 py-2 rounded hover:opacity-90">Profile</a>
+    <!-- Mobile menu -->
+    <nav id="mobile-menu" class="md:hidden hidden border-t">
+      <div class="px-4 py-3 space-y-2">
+        <a href="/index" class="block px-3 py-2 rounded hover:bg-gray-50">Home</a>
+        <a href="/features" class="block px-3 py-2 rounded hover:bg-gray-50">Features</a>
+
+        <div class="border-t pt-2">
+          <button
+            type="button"
+            class="w-full flex items-center justify-between px-3 py-2 rounded hover:bg-gray-50"
+            aria-controls="mobile_log_submenu"
+            aria-expanded="false"
+            id="mobile_log_toggle"
+          >
+            <span>My Log</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5H7z"/></svg>
+          </button>
+          <div id="mobile_log_submenu" class="hidden pl-3">
+            <a href="/addWorkout" class="block px-3 py-2 rounded hover:bg-gray-50">Add Workout</a>
+            <a href="/calendar" class="block px-3 py-2 rounded hover:bg-gray-50">Calendar</a>
+            <a href="/createGraph" class="block px-3 py-2 rounded hover:bg-gray-50">Create Graph</a>
+          </div>
+        </div>
+
+        <a href="/userProfile" class="block bg-black text-white px-3 py-2 rounded hover:opacity-90">Profile</a>
+      </div>
     </nav>
   </header>
 
-  <!-- Main Content -->
-  <main class="p-6 max-w-xl mx-auto space-y-6 grow">
-    <h2 class="text-3xl font-bold">Workout Calendar</h2>
-    <p class="text-gray-600">Pick a date to view your workout for that day.</p>
+  <!-- Main -->
+  <main class="w-full grow">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+      <header class="space-y-2">
+        <h2 class="text-2xl sm:text-3xl font-bold">Workout Calendar</h2>
+        <p class="text-gray-600">Pick a date to view your workout for that day.</p>
+      </header>
 
-    <div class="flex gap-4">
-      <a href="/addWorkout" class="bg-black text-white px-4 py-2 rounded hover:opacity-90">Add Workout</a>
-      <a href="/createGraph" class="bg-black text-white px-4 py-2 rounded hover:opacity-90">Create Graph</a>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <a href="/addWorkout" class="inline-flex justify-center bg-black text-white px-4 py-2 rounded hover:opacity-90">Add Workout</a>
+        <a href="/createGraph" class="inline-flex justify-center bg-black text-white px-4 py-2 rounded hover:opacity-90">Create Graph</a>
+      </div>
+
+      <form action="/displayWOs" method="GET" class="space-y-4 border rounded-2xl p-6">
+        <div>
+          <label for="date" class="block font-medium mb-1">Select a date</label>
+          <input type="date" name="date" id="date" required class="w-full border px-3 py-2 rounded" />
+        </div>
+        <button type="submit" class="w-full sm:w-auto bg-black text-white px-5 py-2.5 rounded-md hover:opacity-90">
+          View Workout
+        </button>
+      </form>
+
+      {{ if .Workout }}
+        {{ $thedate := .Workout.date }}
+        <section class="mt-2 border-t pt-4">
+          <h3 class="text-xl font-semibold mb-3">Workout on {{ $thedate }}</h3>
+
+          <div class="overflow-x-auto rounded-lg border">
+            <table class="min-w-full text-sm">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th scope="col" class="text-left px-4 py-3 font-semibold">Workout</th>
+                  <th scope="col" class="text-left px-4 py-3 font-semibold">Date</th>
+                  <th scope="col" class="text-left px-4 py-3 font-semibold">Sets</th>
+                  <th scope="col" class="text-left px-4 py-3 font-semibold">Reps</th>
+                  <th scope="col" class="text-left px-4 py-3 font-semibold">Weight (lbs)</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y">
+                {{ range $exercise, $params := .Workout }}
+                  {{ if ne $exercise "date" }}
+                  <tr>
+                    <td class="px-4 py-3 font-medium">{{$exercise}}</td>
+                    <td class="px-4 py-3">{{$thedate}}</td>
+                    <td class="px-4 py-3">{{ index $params 0 }}</td>
+                    <td class="px-4 py-3">{{ index $params 1 }}</td>
+                    <td class="px-4 py-3">{{ index $params 2 }}</td>
+                  </tr>
+                  {{ end }}
+                {{ end }}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      {{ end }}
     </div>
-
-    <form action="/displayWOs" method="GET" class="space-y-4">
-      <div>
-        <label for="date" class="block font-medium mb-1">Select a date</label>
-        <input type="date" name="date" id="date" required class="w-full border px-3 py-2 rounded" />
-      </div>
-      <button type="submit" class="bg-black text-white px-4 py-2 rounded hover:opacity-90">
-        View Workout
-      </button>
-    </form>
-
-    <!-- Example Go Template Output (optional) -->
-    {{ if .Workout }}
-      <div class="mt-6 border-t pt-4">
-        <h3 class="text-xl font-semibold mb-2">Workout on {{ .Workout.date }}</h3>
-        {{ range $exercise, $params := .Workout }}
-          {{ if ne $exercise "date" }}
-            <div class="mb-2">
-              <strong>{{ $exercise }}</strong>:
-              {{ index $params 0 }} sets,
-              {{ index $params 1 }} reps,
-              {{ index $params 2 }} lbs
-            </div>
-          {{ end }}
-        {{ end }}
-      </div>
-    {{ end }}
   </main>
 
-   <!-- Footer -->
-    <footer class="w-full border-t px-6 py-4 text-sm text-gray-500 flex justify-between items-center">
-      <div class="space-x-4">
+  <!-- Footer -->
+  <footer class="w-full border-t">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 text-sm text-gray-500 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <span class="font-medium">PRLog</span>
+      <div class="flex gap-4">
         <a href="/index" class="hover:underline">Home</a>
         <a href="/features" class="hover:underline">Features</a>
         <a href="/signupPage" class="hover:underline">Sign Up</a>
       </div>
-    </footer>
+    </div>
+  </footer>
+
+  <script>
+    const mobile_menu_btn = document.getElementById('mobile_menu_button');
+    const mobile_menu = document.getElementById('mobile-menu');
+    const mobile_log_toggle = document.getElementById('mobile_log_toggle');
+    const mobile_log_submenu = document.getElementById('mobile_log_submenu');
+    const dropdown_trigger = document.querySelector('[data-dropdown-trigger]');
+    const dropdown_menu = document.querySelector('[data-dropdown-menu]');
+
+    function toggleHidden(el){ el.classList.toggle('hidden'); }
+
+    mobile_menu_btn?.addEventListener('click', () => {
+      const expanded = mobile_menu_btn.getAttribute('aria-expanded') === 'true';
+      mobile_menu_btn.setAttribute('aria-expanded', String(!expanded));
+      toggleHidden(mobile_menu);
+    });
+
+    mobile_log_toggle?.addEventListener('click', () => {
+      const expanded = mobile_log_toggle.getAttribute('aria-expanded') === 'true';
+      mobile_log_toggle.setAttribute('aria-expanded', String(!expanded));
+      mobile_log_toggle.querySelector('svg')?.classList.toggle('rotate-180');
+      toggleHidden(mobile_log_submenu);
+    });
+
+    dropdown_trigger?.addEventListener('click', (e) => {
+      e.preventDefault();
+      dropdown_menu?.classList.toggle('hidden');
+    });
+    document.addEventListener('click', (e) => {
+      if (!dropdown_menu || !dropdown_trigger) return;
+      if (!dropdown_menu.contains(e.target) && !dropdown_trigger.contains(e.target)) {
+        dropdown_menu.classList.add('hidden');
+      }
+    });
+  </script>
 </body>
 </html>
