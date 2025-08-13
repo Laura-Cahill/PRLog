@@ -90,22 +90,104 @@
 
   <!-- Main -->
   <main class="w-full grow">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-      <header class="space-y-2">
-        <h2 class="text-2xl sm:text-3xl font-bold">Workout Calendar</h2>
-        <p class="text-gray-600">Pick a date to view your workout for that day.</p>
-      </header>
+    <section class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 text-center">
+      <h2 class="text-3xl sm:text-4xl font-bold  text-purple-500 mb-2">Workout Calendar</h2>
+      <p class="text-gray-600 mb-6">Pick a date to view your workout for that day.</p>
 
-      <div class="flex flex-col sm:flex-row gap-3">
+      <div class="flex flex-col sm:flex-row gap-3 justify-center mb-8">
         <a href="/addWorkout" class="inline-flex justify-center bg-black text-white px-4 py-2 rounded hover:opacity-90">Add Workout</a>
         <a href="/createGraph" class="inline-flex justify-center bg-black text-white px-4 py-2 rounded hover:opacity-90">Create Graph</a>
       </div>
 
-      <form action="/displayWOs" method="GET" class="space-y-4 border rounded-2xl p-6">
+      <form action="/displayWOs" method="GET" class="space-y-4 text-left border rounded-2xl p-6">
         <div>
-          <label for="date" class="block font-medium mb-1">Select a date</label>
-          <input type="date" name="date" id="date" required class="w-full border px-3 py-2 rounded" />
+          <!-- Interactive Calendar -->
+          <div id="calendar" class="mx-auto border rounded-lg p-6 shadow-sm w-[350px]"></div>
+
+          <script>
+            function renderCalendar(month, year) {
+              const calendar = document.getElementById("calendar");
+              const monthNames = [
+                "January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+              ];
+
+              const firstDay = new Date(year, month).getDay();
+              const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+              // Build Calendar
+              let html = `
+                <div class="flex justify-between items-center mb-2">
+                  <button id="prevMonth" class="px-2 py-1 bg-gray-200 rounded">&lt;</button>
+                  <h3 class="font-semibold text-lg">${monthNames[month]} ${year}</h3>
+                  <button id="nextMonth" class="px-2 py-1 bg-gray-200 rounded">&gt;</button>
+                </div>
+                <table class="border-collapse w-full text-center">
+                  <thead>
+                    <tr class="bg-gray-100">
+                      <th class="p-1">Sun</th>
+                      <th class="p-1">Mon</th>
+                      <th class="p-1">Tue</th>
+                      <th class="p-1">Wed</th>
+                      <th class="p-1">Thu</th>
+                      <th class="p-1">Fri</th>
+                      <th class="p-1">Sat</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+              `;
+
+              let date = 1;
+              for (let i = 0; i < 6; i++) {
+                html += "<tr>";
+                for (let j = 0; j < 7; j++) {
+                  if (i === 0 && j < firstDay) {
+                    html += `<td class="p-2"></td>`;
+                  } else if (date > daysInMonth) {
+                    html += `<td class="p-2"></td>`;
+                  } else {
+                    html += `<td class="p-2 cursor-pointer hover:bg-purple-200 rounded">${date}</td>`;
+                    date++;
+                  }
+                }
+                html += "</tr>";
+              }
+              html += "</tbody></table>";
+
+              calendar.innerHTML = html;
+
+              const selectedDateInput = document.getElementById('selectedDateInput');
+
+              // Remove current selection (if any), add click listeners to date cells
+              calendar.querySelectorAll('td.cursor-pointer').forEach(td => {
+                td.addEventListener('click', () => {
+                  calendar.querySelectorAll('td.cursor-pointer').forEach(cell => cell.classList.remove('bg-purple-300'));
+
+                  td.classList.add('bg-purple-300');
+
+                  // Format to string: YYYY-MM-DD
+                  const day = td.textContent.padStart(2, '0');
+                  const monthNum = (month + 1).toString().padStart(2, '0');
+                  selectedDateInput.value = `${year}-${monthNum}-${day}`;
+                });
+              });
+
+              // month navigation
+              document.getElementById("prevMonth").addEventListener("click", () => {
+                month === 0 ? renderCalendar(11, year - 1) : renderCalendar(month - 1, year);
+              });
+              document.getElementById("nextMonth").addEventListener("click", () => {
+                month === 11 ? renderCalendar(0, year + 1) : renderCalendar(month + 1, year);
+              });
+            }
+
+            // Initialize with current month/year
+            const today = new Date();
+            renderCalendar(today.getMonth(), today.getFullYear());
+          </script>
         </div>
+
+        <input type="hidden" name="date" id="selectedDateInput" />
         <button type="submit" class="w-full sm:w-auto bg-black text-white px-5 py-2.5 rounded-md hover:opacity-90">
           View Workout
         </button>
@@ -144,7 +226,7 @@
           </div>
         </section>
       {{ end }}
-    </div>
+    </section>
   </main>
 
   <!-- Footer -->

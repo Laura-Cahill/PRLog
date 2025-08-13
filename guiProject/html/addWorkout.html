@@ -68,13 +68,13 @@
   <main class="w-full grow">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
       <section class="space-y-4">
-        <h2 class="text-2xl sm:text-3xl font-bold">My Log</h2>
-        <p class="text-gray-600 max-w-2xl">Here you can add a workout, create a graph, or pick a date to look back at past workouts.</p>
-        <div class="flex flex-col sm:flex-row gap-3">
+        <h2 class="text-2xl sm:text-3xl font-bold text-purple-500 text-center">My Log</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto text-center">Here you can add a workout, create a graph, or pick a date to look back at past workouts.</p>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
           <a href="/calendar" class="inline-flex justify-center bg-black text-white px-4 py-2 rounded hover:opacity-90">View Calendar</a>
           <a href="/createGraph" class="inline-flex justify-center bg-black text-white px-4 py-2 rounded hover:opacity-90">Create Graph</a>
         </div>
-        <div class="mt-4 max-w-sm">
+        <div class="mt-4 max-w-sm mx-auto text-center">
           <label for="calendar" class="block mb-2 font-medium">Select a date</label>
           <input type="date" id="calendar" class="w-full border border-gray-300 rounded px-3 py-2" value="{{ .Date }}" />
         </div>
