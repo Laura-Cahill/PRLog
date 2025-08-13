@@ -100,6 +100,9 @@
       </div>
 
       <form action="/displayWOs" method="GET" class="space-y-4 text-left border rounded-2xl p-6">
+
+        <input type="hidden" name="date" id="selectedDateInput" />
+        
         <div>
           <!-- Interactive Calendar -->
           <div id="calendar" class="mx-auto border rounded-lg p-6 shadow-sm w-[350px]"></div>
@@ -187,7 +190,7 @@
           </script>
         </div>
 
-        <input type="hidden" name="date" id="selectedDateInput" />
+
         <button type="submit" class="w-full sm:w-auto bg-black text-white px-5 py-2.5 rounded-md hover:opacity-90">
           View Workout
         </button>
